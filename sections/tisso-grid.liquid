@@ -1,0 +1,198 @@
+<section class="tisso-products" data-tisso-grid>
+  <div class="tisso-products__header">
+    <h2>{{ section.settings.heading }}</h2>
+  </div>
+
+  <div class="tisso-products__grid">
+
+    {% for block in section.blocks %}
+      {% assign product = block.settings.product %}
+
+      {% if product != blank %}
+
+        <article
+          class="tisso-product-card"
+          {{ block.shopify_attributes }}
+          data-product-card
+          data-product-handle="{{ product.handle }}"
+        >
+
+          <div class="tisso-product-card__image-wrapper">
+
+            {% if product.featured_image %}
+              {{
+                product.featured_image
+                | image_url: width: 1200
+                | image_tag:
+                  loading: 'lazy',
+                  class: 'tisso-product-card__image',
+                  alt: product.featured_image.alt | escape
+              }}
+            {% endif %}
+
+            <button
+              type="button"
+              class="tisso-hotspot"
+              aria-label="View {{ product.title }}"
+              data-product-popup-open
+            >
+              <span>+</span>
+            </button>
+
+          </div>
+
+          <div
+            class="tisso-product-data"
+            data-product-data
+            hidden
+          >
+            <script type="application/json">
+              {{ product | json }}
+            </script>
+          </div>
+
+        </article>
+
+      {% endif %}
+    {% endfor %}
+
+  </div>
+</section>
+
+
+<!-- PRODUCT POPUP -->
+
+<div
+  class="tisso-popup"
+  data-tisso-popup
+  aria-hidden="true"
+>
+
+  <div
+    class="tisso-popup__overlay"
+    data-product-popup-close
+  ></div>
+
+  <div
+    class="tisso-popup__dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="tisso-popup-title"
+  >
+
+    <button
+      type="button"
+      class="tisso-popup__close"
+      data-product-popup-close
+      aria-label="Close"
+    >
+      ×
+    </button>
+
+    <div class="tisso-popup__image">
+      <img
+        src=""
+        alt=""
+        data-popup-image
+      >
+    </div>
+
+    <div class="tisso-popup__content">
+
+      <h2
+        id="tisso-popup-title"
+        data-popup-title
+      ></h2>
+
+      <div
+        class="tisso-popup__price"
+        data-popup-price
+      ></div>
+
+      <div
+        class="tisso-popup__description"
+        data-popup-description
+      ></div>
+
+      <form data-add-to-cart-form>
+
+        <div
+          class="tisso-popup__variants"
+          data-popup-variants
+        ></div>
+
+        <button
+          type="submit"
+          class="tisso-add-button"
+          data-add-to-cart
+        >
+          <span>ADD TO CART</span>
+          <span>→</span>
+        </button>
+
+        <p
+          class="tisso-popup__error"
+          data-popup-error
+          hidden
+        ></p>
+
+      </form>
+
+    </div>
+
+  </div>
+</div>
+
+
+{% schema %}
+{
+  "name": "Tisso Product Grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Tisso vison in the wild"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tisso Product Grid",
+      "blocks": [
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
