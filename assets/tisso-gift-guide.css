@@ -209,8 +209,10 @@
 
 .tisso-products__header h2 {
   margin: 0;
-  padding-top: 10px;
-  padding-left: 2%;
+  position: absolute;
+  top: 73%;
+  left: 4%;
+  font-family: "Times New Roman", Times, serif;
   font-size: 32px;
   line-height: 1;
   font-weight: 400;
