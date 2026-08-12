@@ -634,25 +634,34 @@ body.tisso-popup-open {
   display: none;
 }
 
+/* Tisso mobile hamburger header */
+
+.tisso-mobile-header,
+.tisso-mobile-menu {
+  display: none;
+}
+
 @media screen and (max-width: 749px) {
 
   .tisso-mobile-header {
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   width: 100%;
-   height: 41px;
-   background: #f7f7f7;
+    position: relative;
+    top: 50%;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 41px;
+    padding: 0 12px;
+    box-sizing: border-box;
+    background: #f7f7f7;
   }
 
   .tisso-mobile-brand {
-    margin: 0;
-    padding: 0;
     font-size: 16px;
     font-weight: 800;
     line-height: 1;
     letter-spacing: -0.03em;
-    text-align: center;
   }
 
   .tisso-mobile-menu-button {
@@ -661,7 +670,6 @@ body.tisso-popup-open {
     top: 50%;
     width: 30px;
     height: 30px;
-    margin: 0;
     padding: 0;
     border: 0;
     background: transparent;
@@ -675,8 +683,6 @@ body.tisso-popup-open {
 
   .tisso-mobile-menu-icon {
     display: block;
-    margin: 0;
-    padding: 0;
     font-size: 18px;
     line-height: 1;
   }
@@ -697,10 +703,8 @@ body.tisso-popup-open {
 
   .tisso-mobile-menu__message {
     margin: 0 0 16px;
-    padding: 0;
     text-align: center;
     font-size: 15px;
-    font-weight: 400;
     line-height: 1.4;
   }
 
