@@ -30,7 +30,6 @@
               }}
             {% endif %}
 
-            <!-- PLUS HOTSPOT -->
             <button
               type="button"
               class="tisso-hotspot"
@@ -42,11 +41,7 @@
 
           </div>
 
-          <!-- PRODUCT DATA -->
-          <script
-            type="application/json"
-            data-product-data
-          >
+          <script type="application/json" data-product-data>
             {{ product | json }}
           </script>
 
@@ -59,25 +54,17 @@
 
 </section>
 
-
-<!-- =========================================
-     PRODUCT POPUP
-     ========================================= -->
-
 <div
   class="tisso-popup"
   data-tisso-popup
   aria-hidden="true"
 >
 
-  <!-- DARK OVERLAY -->
   <div
     class="tisso-popup__overlay"
     data-product-popup-close
   ></div>
 
-
-  <!-- POPUP WINDOW -->
   <div
     class="tisso-popup__dialog"
     role="dialog"
@@ -85,7 +72,6 @@
     aria-labelledby="tisso-popup-title"
   >
 
-    <!-- CLOSE BUTTON -->
     <button
       type="button"
       class="tisso-popup__close"
@@ -95,20 +81,14 @@
       ×
     </button>
 
-
-    <!-- PRODUCT IMAGE -->
     <div class="tisso-popup__image">
-
       <img
         src=""
         alt=""
         data-popup-image
       >
-
     </div>
 
-
-    <!-- PRODUCT INFORMATION -->
     <div class="tisso-popup__content">
 
       <h2
@@ -116,20 +96,16 @@
         data-popup-title
       ></h2>
 
-
       <div
         class="tisso-popup__price"
         data-popup-price
       ></div>
-
 
       <div
         class="tisso-popup__description"
         data-popup-description
       ></div>
 
-
-      <!-- VARIANTS + ADD TO CART -->
       <form data-add-to-cart-form>
 
         <div
@@ -137,8 +113,6 @@
           data-popup-variants
         ></div>
 
-
-        <!-- ADD TO CART BUTTON -->
         <button
           type="submit"
           class="tisso-add-button"
@@ -153,8 +127,6 @@
           </span>
         </button>
 
-
-        <!-- ERROR -->
         <p
           class="tisso-popup__error"
           data-popup-error
@@ -169,6 +141,29 @@
 
 </div>
 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  const menuButton = document.querySelector('.tisso-mobile-menu-button');
+  const menu = document.querySelector('.tisso-mobile-menu');
+
+  if (!menuButton || !menu) return;
+
+  menuButton.addEventListener('click', function () {
+
+    const isOpen = menuButton.getAttribute('aria-expanded') === 'true';
+
+    menuButton.setAttribute(
+      'aria-expanded',
+      String(!isOpen)
+    );
+
+    menu.hidden = isOpen;
+
+  });
+
+});
+</script>
 
 {% schema %}
 {
@@ -201,17 +196,4 @@
     }
   ]
 }
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  const button = document.querySelector('.tisso-mobile-menu-button');
-  const menu = document.querySelector('.tisso-mobile-menu');
-
-  if (!button || !menu) return;
-
-  button.addEventListener('click', function () {
-    menu.hidden = !menu.hidden;
-  });
-});
-</script>
 {% endschema %}
