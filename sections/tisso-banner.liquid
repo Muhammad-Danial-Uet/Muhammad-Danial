@@ -246,4 +246,17 @@
   ]
 }
 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const button = document.querySelector('.tisso-mobile-menu-button');
+  const menu = document.querySelector('.tisso-mobile-menu');
+
+  if (!button || !menu) return;
+
+  button.addEventListener('click', function () {
+    menu.hidden = !menu.hidden;
+  });
+});
+</script>
+
 {% endschema %}
