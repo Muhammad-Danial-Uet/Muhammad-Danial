@@ -64,42 +64,6 @@
     {{ section.settings.bottom_message }}
   </div>
 
-  <div class="tisso-products">
-    <div class="tisso-products__header">
-      <h2>{{ section.settings.products_heading }}</h2>
-    </div>
-
-    <div class="tisso-products__grid">
-      {% for product in section.settings.collection.products limit: section.settings.products_limit %}
-        <article class="tisso-product-card">
-
-          <div class="tisso-product-card__image-wrapper">
-            {% if product.featured_image %}
-              <img
-                class="tisso-product-card__image"
-                src="{{ product.featured_image | image_url: width: 900 }}"
-                alt="{{ product.featured_image.alt | default: product.title | escape }}"
-                loading="lazy"
-                width="{{ product.featured_image.width }}"
-                height="{{ product.featured_image.height }}"
-              >
-            {% endif %}
-
-            <button
-              type="button"
-              class="tisso-hotspot"
-              aria-label="View {{ product.title | escape }}"
-              data-product-url="{{ product.url }}"
-            >
-              <span>+</span>
-            </button>
-          </div>
-
-        </article>
-      {% endfor %}
-    </div>
-  </div>
-
 </section>
 
 {% schema %}
@@ -162,26 +126,6 @@
       "id": "bottom_message",
       "label": "Bottom announcement",
       "default": "FREE SHIPPING ON ORDERS OVER $100"
-    },
-    {
-      "type": "collection",
-      "id": "collection",
-      "label": "Product collection"
-    },
-    {
-      "type": "text",
-      "id": "products_heading",
-      "label": "Products heading",
-      "default": "Featured Products"
-    },
-    {
-      "type": "range",
-      "id": "products_limit",
-      "label": "Number of products",
-      "min": 1,
-      "max": 12,
-      "step": 1,
-      "default": 6
     }
   ],
   "presets": [
