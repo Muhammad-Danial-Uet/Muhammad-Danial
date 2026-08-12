@@ -4,6 +4,10 @@
   background: #f7f7f7;
 }
 
+/* =========================
+   TOP BAR
+   ========================= */
+
 .tisso-banner__top {
   min-height: 72px;
   display: flex;
@@ -26,6 +30,10 @@
   font-size: 15px;
 }
 
+/* =========================
+   BANNER CONTENT
+   ========================= */
+
 .tisso-banner__content {
   min-height: 620px;
   display: flex;
@@ -35,9 +43,9 @@
   background:
     linear-gradient(
       90deg,
-      rgba(255,255,255,0.98) 0%,
-      rgba(255,255,255,0.75) 35%,
-      rgba(255,255,255,0) 70%
+      rgba(255, 255, 255, 0.98) 0%,
+      rgba(255, 255, 255, 0.75) 35%,
+      rgba(255, 255, 255, 0) 70%
     );
 }
 
@@ -59,6 +67,10 @@
   line-height: 1.5;
 }
 
+/* =========================
+   BUTTONS
+   ========================= */
+
 .tisso-button {
   display: inline-flex;
   align-items: center;
@@ -66,29 +78,53 @@
   gap: 30px;
   min-width: 190px;
   padding: 16px 22px;
-  border: 0;
+  border: 1px solid transparent;
   text-decoration: none;
   font-weight: 700;
+  cursor: pointer;
   transition:
+    background-color 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease,
     transform 180ms ease,
     box-shadow 180ms ease;
 }
 
+/* General button hover movement */
 .tisso-button:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
+/* CHOOSE GIFT
+   Yellow → Black */
 .tisso-button--yellow {
-  background: #ffd600;
-  color: #000;
+  background-color: #ffd600;
+  color: #000000;
+  border-color: #ffd600;
 }
 
+.tisso-button--yellow:hover {
+  background-color: #000000;
+  color: #ffffff;
+  border-color: #000000;
+}
+
+/* SHOP NOW
+   Black → Yellow */
 .tisso-button--black {
-  background: #000;
-  color: #fff;
+  background-color: #000000;
+  color: #ffffff;
+  border-color: #000000;
 }
 
+.tisso-button--black:hover {
+  background-color: #ffd600;
+  color: #000000;
+  border-color: #ffd600;
+}
+
+/* Arrow animation */
 .tisso-button__arrow {
   transition: transform 180ms ease;
 }
@@ -97,22 +133,27 @@
   transform: translateX(6px);
 }
 
+/* =========================
+   ANNOUNCEMENT
+   ========================= */
+
 .tisso-banner__announcement {
   padding: 12px 20px;
   text-align: center;
-  background: #000;
-  color: #fff;
+  background: #000000;
+  color: #ffffff;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.05em;
 }
 
-
-/* GRID */
+/* =========================
+   PRODUCT GRID
+   ========================= */
 
 .tisso-products {
   padding: 70px 5%;
-  background: #fff;
+  background: #ffffff;
 }
 
 .tisso-products__header {
@@ -145,6 +186,10 @@
   object-fit: cover;
 }
 
+/* =========================
+   HOTSPOT
+   ========================= */
+
 .tisso-hotspot {
   position: absolute;
   top: 50%;
@@ -157,19 +202,20 @@
   display: grid;
   place-items: center;
   transform: translate(-50%, -50%);
-  background: #fff;
-  color: #000;
+  background: #ffffff;
+  color: #000000;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
   transition:
     transform 180ms ease,
-    background 180ms ease;
+    background-color 180ms ease,
+    color 180ms ease;
 }
 
 .tisso-hotspot:hover {
   transform: translate(-50%, -50%) scale(1.15);
-  background: #000;
-  color: #fff;
+  background: #000000;
+  color: #ffffff;
 }
 
 .tisso-hotspot span {
@@ -177,8 +223,9 @@
   line-height: 1;
 }
 
-
-/* POPUP */
+/* =========================
+   POPUP
+   ========================= */
 
 .tisso-popup {
   position: fixed;
@@ -194,7 +241,7 @@
 .tisso-popup__overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.55);
+  background: rgba(0, 0, 0, 0.55);
 }
 
 .tisso-popup__dialog {
@@ -207,7 +254,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   transform: translate(-50%, -50%);
-  background: #fff;
+  background: #ffffff;
 }
 
 .tisso-popup__close {
@@ -219,7 +266,7 @@
   height: 38px;
   border: 0;
   border-radius: 50%;
-  background: #fff;
+  background: #ffffff;
   font-size: 28px;
   line-height: 1;
   cursor: pointer;
@@ -274,8 +321,8 @@
   width: 100%;
   min-height: 48px;
   padding: 10px;
-  border: 1px solid #000;
-  background: #fff;
+  border: 1px solid #000000;
+  background: #ffffff;
 }
 
 .tisso-add-button {
@@ -286,8 +333,8 @@
   align-items: center;
   justify-content: space-between;
   border: 0;
-  background: #000;
-  color: #fff;
+  background: #000000;
+  color: #ffffff;
   cursor: pointer;
   font-weight: 700;
 }
@@ -299,46 +346,18 @@
 
 .tisso-popup__error {
   margin-top: 15px;
-  color: #c00;
+  color: #c00000;
 }
 
 body.tisso-popup-open {
   overflow: hidden;
 }
 
-/* Tisso Banner Buttons */
-
-/* Choose Gift: Yellow → Black */
-.tisso-banner__choose-gift {
-  background: #f5d617;
-  color: #000000;
-  border: 1px solid #f5d617;
-  transition: background-color 0.25s ease, color 0.25s ease;
-}
-
-.tisso-banner__choose-gift:hover {
-  background: #000000;
-  color: #ffffff;
-}
-
-/* Shop Now: Black → Yellow */
-.tisso-banner__shop-now {
-  background: #000000;
-  color: #ffffff;
-  border: 1px solid #000000;
-  transition: background-color 0.25s ease, color 0.25s ease;
-}
-
-.tisso-banner__shop-now:hover {
-  background: #f5d617;
-  color: #000000;
-}
-
-
-/* MOBILE */
+/* =========================
+   MOBILE
+   ========================= */
 
 @media screen and (max-width: 749px) {
-
   .tisso-banner__top {
     min-height: 60px;
     padding: 12px 16px;
@@ -394,5 +413,4 @@ body.tisso-popup-open {
   .tisso-popup__content {
     padding: 30px 20px 25px;
   }
-
 }
