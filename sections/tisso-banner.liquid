@@ -1,6 +1,49 @@
 <section class="tisso-banner">
 
+  <!-- MOBILE HEADER -->
+  <div class="tisso-mobile-header">
+
+    <button
+      type="button"
+      class="tisso-mobile-menu-button"
+      aria-label="Open menu"
+      aria-expanded="false"
+      data-tisso-mobile-menu
+    >
+      <span class="tisso-mobile-menu-icon">☰</span>
+    </button>
+
+    <div class="tisso-mobile-brand">
+      {{ section.settings.brand_text }}
+    </div>
+
+  </div>
+
+  <!-- MOBILE MENU -->
+  <div
+    class="tisso-mobile-menu"
+    data-tisso-mobile-panel
+    hidden
+  >
+
+    <div class="tisso-mobile-menu__message">
+      {{ section.settings.top_message }}
+    </div>
+
+    <a
+      href="{{ section.settings.top_button_link | default: '#' }}"
+      class="tisso-button tisso-button--yellow tisso-mobile-menu__button"
+    >
+      <span>{{ section.settings.top_button_text }}</span>
+      <span class="tisso-button__arrow">→</span>
+    </a>
+
+  </div>
+
+
+  <!-- DESKTOP TOP BAR -->
   <div class="tisso-banner__top">
+
     <div class="tisso-banner__brand">
       {{ section.settings.brand_text }}
     </div>
@@ -16,11 +59,15 @@
       <span>{{ section.settings.top_button_text }}</span>
       <span class="tisso-button__arrow">→</span>
     </a>
+
   </div>
 
+
+  <!-- BANNER -->
   <div class="tisso-banner__content">
 
     {% if section.settings.banner_image != blank %}
+
       <img
         class="tisso-banner__background"
         src="{{ section.settings.banner_image | image_url: width: 2400 }}"
@@ -36,7 +83,9 @@
         alt="{{ section.settings.banner_image.alt | escape }}"
         loading="eager"
       >
+
     {% endif %}
+
 
     <div class="tisso-banner__inner">
 
@@ -60,13 +109,75 @@
 
   </div>
 
+
+  <!-- BOTTOM ANNOUNCEMENT -->
   <div class="tisso-banner__announcement">
     {{ section.settings.bottom_message }}
   </div>
 
 </section>
 
+
+<!-- MOBILE MENU SCRIPT -->
+
+<script>
+
+(function() {
+
+  const menuButton =
+    document.querySelector('[data-tisso-mobile-menu]');
+
+  const menuPanel =
+    document.querySelector('[data-tisso-mobile-panel]');
+
+  if (!menuButton || !menuPanel) {
+    return;
+  }
+
+  menuButton.addEventListener('click', function() {
+
+    const isOpen =
+      menuButton.getAttribute('aria-expanded') === 'true';
+
+    if (isOpen) {
+
+      menuButton.setAttribute(
+        'aria-expanded',
+        'false'
+      );
+
+      menuButton.setAttribute(
+        'aria-label',
+        'Open menu'
+      );
+
+      menuPanel.hidden = true;
+
+    } else {
+
+      menuButton.setAttribute(
+        'aria-expanded',
+        'true'
+      );
+
+      menuButton.setAttribute(
+        'aria-label',
+        'Close menu'
+      );
+
+      menuPanel.hidden = false;
+
+    }
+
+  });
+
+})();
+
+</script>
+
+
 {% schema %}
+
 {
   "name": "Tisso Banner",
   "settings": [
@@ -134,4 +245,5 @@
     }
   ]
 }
+
 {% endschema %}
