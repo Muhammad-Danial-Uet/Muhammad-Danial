@@ -469,6 +469,7 @@ body.tisso-popup-open {
     width: 100%;
     min-height: 0;
     padding: 0;
+    margin: 0;
     overflow: hidden;
     background: #ffffff;
     text-align: center;
@@ -476,27 +477,43 @@ body.tisso-popup-open {
 
   .tisso-banner__inner {
     position: relative;
+    order: 1;
     top: auto;
     left: auto;
-    order: 1;
     width: 100%;
-    padding: 28px 20px 24px;
+    max-width: 100%;
+    padding: 28px 20px 20px;
+    margin: 0;
     transform: none;
+    text-align: center;
     z-index: 2;
+  }
+
+  .tisso-banner__title {
+    margin: 0 0 18px;
+    font-size: 30px;
+    line-height: 1.05;
+  }
+
+  .tisso-banner__description {
+    max-width: 320px;
+    margin: 0 auto 22px;
+    font-size: 15px;
+    line-height: 1.4;
+  }
+
+  .tisso-banner__inner .tisso-button {
+    margin: 0 auto;
   }
 
   .tisso-banner__background {
     order: 2;
     display: block;
     width: 100%;
-    height: auto;
     max-width: 100%;
+    height: auto;
+    margin: 0;
     object-fit: contain;
-  }
-
-  .tisso-banner__description {
-    margin-left: auto;
-    margin-right: auto;
   }
 
   .tisso-products {
