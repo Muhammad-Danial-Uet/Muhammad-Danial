@@ -256,8 +256,8 @@
   position: absolute;
   top: var(--hotspot-y);
   left: var(--hotspot-x);
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   padding: 0;
   border: 0;
   border-radius: 50%;
@@ -281,7 +281,7 @@
 }
 
 .tisso-hotspot span {
-  font-size: 21px;
+  font-size: 16px;
   line-height: 1;
 }
 
@@ -622,8 +622,8 @@ body.tisso-popup-open {
   }
 
   .tisso-hotspot {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
   }
 
   @media screen and (max-width: 749px) {
