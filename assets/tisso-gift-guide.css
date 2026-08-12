@@ -625,6 +625,15 @@ body.tisso-popup-open {
     width: 32px;
     height: 32px;
   }
+
+  @media screen and (max-width: 749px) {
+  .tisso-products__header h2 {
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    white-space: nowrap;
+  }
+}
 }
 
 /* Tisso mobile hamburger header */
