@@ -1,4 +1,5 @@
 <section class="tisso-banner">
+
   <div class="tisso-banner__top">
     <div class="tisso-banner__brand">
       {{ section.settings.brand_text }}
@@ -9,7 +10,7 @@
     </div>
 
     <a
-      href="{{ section.settings.top_button_link }}"
+      href="{{ section.settings.top_button_link | default: '#' }}"
       class="tisso-button tisso-button--yellow"
     >
       <span>{{ section.settings.top_button_text }}</span>
@@ -17,7 +18,21 @@
     </a>
   </div>
 
-  <div class="tisso-banner__content">
+
+  <div
+    class="tisso-banner__content"
+    {% if section.settings.banner_image != blank %}
+      style="background-image:
+        linear-gradient(
+          90deg,
+          rgba(255,255,255,0.98) 0%,
+          rgba(255,255,255,0.75) 35%,
+          rgba(255,255,255,0) 70%
+        ),
+        url('{{ section.settings.banner_image | image_url: width: 2400 }}');"
+    {% endif %}
+  >
+
     <div class="tisso-banner__inner">
 
       <h1 class="tisso-banner__title">
@@ -29,7 +44,7 @@
       </div>
 
       <a
-        href="{{ section.settings.main_button_link }}"
+        href="{{ section.settings.main_button_link | default: '#' }}"
         class="tisso-button tisso-button--black"
       >
         <span>{{ section.settings.main_button_text }}</span>
@@ -37,17 +52,26 @@
       </a>
 
     </div>
+
   </div>
+
 
   <div class="tisso-banner__announcement">
     {{ section.settings.bottom_message }}
   </div>
+
 </section>
+
 
 {% schema %}
 {
   "name": "Tisso Banner",
   "settings": [
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Banner image"
+    },
     {
       "type": "text",
       "id": "brand_text",
@@ -69,7 +93,7 @@
     {
       "type": "url",
       "id": "top_button_link",
-      "label": "Top button link"
+      "label": "Choose Gift button link"
     },
     {
       "type": "text",
@@ -92,7 +116,7 @@
     {
       "type": "url",
       "id": "main_button_link",
-      "label": "Main button link"
+      "label": "Shop Now button link"
     },
     {
       "type": "text",
