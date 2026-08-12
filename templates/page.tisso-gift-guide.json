@@ -55,24 +55,24 @@
           "type": "product",
           "settings": {
             "product": "classic-leather-jacket",
-            "hotspot_x": 50,
-            "hotspot_y": 50
+            "hotspot_x": 60,
+            "hotspot_y": 25
           }
         },
         "product_GD7xCf": {
           "type": "product",
           "settings": {
             "product": "classic-varsity-top",
-            "hotspot_x": 50,
-            "hotspot_y": 50
+            "hotspot_x": 70,
+            "hotspot_y": 20
           }
         },
         "product_xerwiC": {
           "type": "product",
           "settings": {
             "product": "dark-denim-top",
-            "hotspot_x": 50,
-            "hotspot_y": 50
+            "hotspot_x": 60,
+            "hotspot_y": 15
           }
         }
       },
