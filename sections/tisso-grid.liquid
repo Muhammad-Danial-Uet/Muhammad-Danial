@@ -31,14 +31,15 @@
             {% endif %}
 
             <!-- PLUS HOTSPOT -->
-            <button
-              type="button"
-              class="tisso-hotspot"
-              data-product-popup-open
-              aria-label="View {{ product.title | escape }}"
-            >
-              <span aria-hidden="true">+</span>
-            </button>
+          <button
+          type="button"
+          class="tisso-hotspot"
+          data-product-popup-open
+          aria-label="View {{ product.title | escape }}"
+          style="--hotspot-x: {{ block.settings.hotspot_x }}%; --hotspot-y: {{ block.settings.hotspot_y }}%;"
+          >
+          <span aria-hidden="true">+</span>
+          </button>
 
           </div>
 
