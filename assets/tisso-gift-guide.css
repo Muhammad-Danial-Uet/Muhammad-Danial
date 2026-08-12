@@ -622,8 +622,8 @@ body.tisso-popup-open {
   }
 
   .tisso-hotspot {
-    width: 24px;
-    height: 24px;
+    width: 54px;
+    height: 54px;
   }
 
   @media screen and (max-width: 749px) {
