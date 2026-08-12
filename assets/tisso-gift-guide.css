@@ -611,6 +611,50 @@ body.tisso-popup-open {
   overflow: hidden;
 }
 
+/* =========================================================
+   VARIANT BUTTONS
+   ========================================================= */
+
+.tisso-variant-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: 100%;
+  border: 1px solid #777;
+  box-sizing: border-box;
+}
+
+.tisso-variant-button {
+  position: relative;
+  width: 100%;
+  height: 48px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 0;
+  background: #ffffff;
+  color: #000000;
+  font-size: 16px;
+  font-weight: 400;
+  text-align: left;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.tisso-variant-button + .tisso-variant-button {
+  border-left: 1px solid #777;
+}
+
+.tisso-variant-button.is-selected {
+  box-shadow: inset 6px 0 0 #174ea6;
+}
+
+.tisso-variant-button:hover {
+  background: #f5f5f5;
+}
+
+.tisso-variant-button:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: -2px;
+}
 
 /* =========================================================
    MOBILE POPUP
