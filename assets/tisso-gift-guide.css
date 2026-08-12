@@ -31,6 +31,7 @@
   font-size: 15px;
 }
 
+
 .tisso-banner__content {
   position: relative;
   width: 100%;
@@ -45,41 +46,15 @@
   width: 100%;
   height: auto;
   max-width: 100%;
-  object-fit: contain;
 }
 
 .tisso-banner__inner {
   position: absolute;
-  top: 50%;
+  top: 58%;
   left: 8%;
   z-index: 2;
   width: min(520px, 100%);
   transform: translateY(-50%);
-}
-
-@media screen and (max-width: 749px) {
-
-  .tisso-banner__content {
-    width: 100%;
-    min-height: 0;
-    padding: 0;
-  }
-
-  .tisso-banner__background {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-  }
-
-  .tisso-banner__inner {
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 24px 20px;
-    text-align: center;
-    transform: none;
-  }
-
 }
 
 
@@ -465,6 +440,7 @@ body.tisso-popup-open {
 /* Mobile */
 
 @media screen and (max-width: 749px) {
+
   .tisso-banner__top {
     min-height: 60px;
     padding: 12px 16px;
@@ -488,15 +464,34 @@ body.tisso-popup-open {
   }
 
   .tisso-banner__content {
-    min-height: 520px;
-    padding: 50px 24px;
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 0;
+    padding: 0;
+    overflow: hidden;
+    background: #ffffff;
     text-align: center;
-    background-position: center center;
   }
 
   .tisso-banner__inner {
+    position: relative;
+    top: auto;
+    left: auto;
+    order: 1;
     width: 100%;
+    padding: 28px 20px 24px;
+    transform: none;
+    z-index: 2;
+  }
+
+  .tisso-banner__background {
+    order: 2;
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    object-fit: contain;
   }
 
   .tisso-banner__description {
