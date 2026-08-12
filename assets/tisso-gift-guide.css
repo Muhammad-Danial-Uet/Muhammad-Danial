@@ -498,7 +498,7 @@ body.tisso-popup-open {
   /* Crop image and shipfting it down */
 .tisso-banner__background {
   position: absolute;
-  top: 100px;
+  top: 150px;
   left: 0;
   width: 100%;
   height: 100%;
