@@ -12,6 +12,7 @@
     "banner": {
       "type": "tisso-banner",
       "settings": {
+        "banner_image": "shopify://shop_images/1.png",
         "brand_text": "TISSO VISION",
         "top_message": "Find the ideal gift for your loved ones.",
         "top_button_text": "CHOOSE GIFT",
