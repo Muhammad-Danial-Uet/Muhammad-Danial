@@ -55,8 +55,8 @@
 
 .tisso-banner__inner {
   position: absolute;
-  top: 65%;
-  left: 8%;
+  top: 95%;
+  left: 5%;
   z-index: 2;
   width: min(520px, 45%);
   transform: translateY(-50%);
