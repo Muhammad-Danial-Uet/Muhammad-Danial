@@ -306,6 +306,34 @@ body.tisso-popup-open {
   overflow: hidden;
 }
 
+/* Tisso Banner Buttons */
+
+/* Choose Gift: Yellow → Black */
+.tisso-banner__choose-gift {
+  background: #f5d617;
+  color: #000000;
+  border: 1px solid #f5d617;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.tisso-banner__choose-gift:hover {
+  background: #000000;
+  color: #ffffff;
+}
+
+/* Shop Now: Black → Yellow */
+.tisso-banner__shop-now {
+  background: #000000;
+  color: #ffffff;
+  border: 1px solid #000000;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.tisso-banner__shop-now:hover {
+  background: #f5d617;
+  color: #000000;
+}
+
 
 /* MOBILE */
 
