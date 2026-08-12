@@ -650,7 +650,7 @@ body.tisso-popup-open {
     margin: 0;
     padding: 0;
     position: relative;
-    top: 8px;
+    top: 10px;
     font-size: 20px;
     font-weight: 1000;
     line-height: 1;
@@ -659,8 +659,8 @@ body.tisso-popup-open {
 
   .tisso-mobile-menu-button {
     position: absolute;
-    left: 3px;
-    top: 58%;
+    left: 10px;
+    top: 70%;
     width: 20px;
     height: 20px;
     padding: 0;
