@@ -31,68 +31,23 @@
   font-size: 15px;
 }
 
-@media screen and (max-width: 749px) {
+.tisso-banner__content {
+  position: relative;
+  min-height: 620px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 70px 8%;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
 
-  .tisso-banner__content {
-    min-height: 520px;
-
-    display: block;
-
-    padding: 48px 20px 0;
-
-    text-align: center;
-
-    background-size: 100% auto;
-    background-position: center bottom;
-    background-repeat: no-repeat;
-  }
-
-  .tisso-banner__inner {
-    position: relative;
-    z-index: 2;
-
-    width: 100%;
-    max-width: 100%;
-
-    margin: 0 auto;
-  }
-
-  .tisso-banner__title {
-    margin: 0 0 22px;
-
-    font-size: 32px;
-    line-height: 1.05;
-
-    letter-spacing: -0.04em;
-  }
-
-  .tisso-banner__description {
-    max-width: 320px;
-
-    margin: 0 auto 0;
-
-    font-size: 14px;
-    line-height: 1.45;
-  }
-
-  .tisso-banner__inner .tisso-button {
-    position: absolute;
-
-    top: 310px;
-    left: 50%;
-
-    transform: translateX(-50%);
-
-    min-width: 165px;
-
-    padding: 14px 18px;
-
-    z-index: 5;
-  }
-
-  .tisso-banner__inner .tisso-button:hover {
-    transform: translateX(-50%);
-  }
+.tisso-banner__inner {
+  position: relative;
+  z-index: 2;
+  width: min(520px, 100%);
 }
 
 .tisso-banner__title {
