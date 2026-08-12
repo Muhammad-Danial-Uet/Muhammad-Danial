@@ -6,6 +6,7 @@
   lang="{{ request.locale.iso_code }}"
 >
   <head>
+    {{ 'tisso-gift-guide.css' | asset_url | stylesheet_tag }}
     {%- if settings.favicon != blank -%}
       <link
         rel="icon"
@@ -191,5 +192,7 @@
     {% if settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add-modal' %}
     {% endif %}
+
+    <script src="{{ 'tisso-gift-guide.js' | asset_url }}" defer="defer"></script>
   </body>
 </html>
