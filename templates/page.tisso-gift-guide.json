@@ -21,7 +21,7 @@
         "description": "<p>Discover our collection of gifts designed to make every moment special.</p>",
         "main_button_text": "SHOP NOW",
         "main_button_link": "",
-        "bottom_message": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL"
+        "bottom_message": "FREE SHIPPING ON ORDERS OVER $100"
       }
     },
     "grid": {
@@ -73,7 +73,7 @@
         "product_xerwiC"
       ],
       "settings": {
-        "companion_product": ""
+        "heading": "Tisso vision in the wild"
       }
     }
   },
