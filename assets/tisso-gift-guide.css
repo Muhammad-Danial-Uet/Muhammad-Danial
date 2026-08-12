@@ -487,7 +487,7 @@ body.tisso-popup-open {
 
 .tisso-banner__content {
   position: relative;
-  top: -30px;
+  top: 10px;
   width: 100%;
   height: 380px;
   min-height: 380px;
