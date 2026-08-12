@@ -708,11 +708,21 @@ body.tisso-popup-open {
     line-height: 1.4;
   }
 
-  .tisso-mobile-menu__button {
-    width: 100%;
-    justify-content: space-between;
-    box-sizing: border-box;
-  }
+  .tisso-mobile-menu-button {
+  position: absolute;
+  left: 8px;
+  top: 55%;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #000000;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
   .tisso-banner__top {
     display: none;
