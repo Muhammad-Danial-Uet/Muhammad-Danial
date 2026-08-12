@@ -21,6 +21,7 @@
       !popupPrice ||
       !popupDescription ||
       !popupVariants ||
+      !popupError ||
       !form ||
       !addButton
     ) {
@@ -30,9 +31,7 @@
     let currentProduct = null;
     let selectedVariantId = null;
 
-    /*
-     * FORMAT PRICE
-     */
+    // Format price.
     function formatMoney(priceInCents) {
       const amount = Number(priceInCents || 0) / 100;
 
@@ -45,9 +44,7 @@
       ).format(amount);
     }
 
-    /*
-     * OPEN PRODUCT POPUP
-     */
+    // Open product popup.
     function openPopup(product) {
       if (!product) return;
 
@@ -57,9 +54,6 @@
       popupError.hidden = true;
       popupError.textContent = '';
 
-      /*
-       * PRODUCT IMAGE
-       */
       if (product.featured_image) {
         popupImage.src = product.featured_image;
         popupImage.alt = product.title || '';
@@ -70,42 +64,24 @@
         popupImage.style.display = 'none';
       }
 
-      /*
-       * PRODUCT TITLE
-       */
       popupTitle.textContent = product.title || '';
-
-      /*
-       * PRODUCT DESCRIPTION
-       */
       popupDescription.innerHTML = product.description || '';
 
-      /*
-       * PRODUCT PRICE
-       */
       if (product.price !== undefined) {
         popupPrice.textContent = formatMoney(product.price);
       } else {
         popupPrice.textContent = '';
       }
 
-      /*
-       * VARIANTS
-       */
+      addButton.disabled = false;
       renderVariants(product);
 
-      /*
-       * OPEN POPUP
-       */
       popup.classList.add('is-open');
       popup.setAttribute('aria-hidden', 'false');
-
       document.body.classList.add('tisso-popup-open');
     }
 
-    /*
-     * CLOSE PRODUCT POPUP
-     */
+    // Close product popup.
     function closePopup() {
       popup.classList.remove('is-open');
       popup.setAttribute('aria-hidden', 'true');
@@ -118,48 +94,17 @@
       popupVariants.innerHTML = '';
       popupError.hidden = true;
       popupError.textContent = '';
+      addButton.disabled = false;
     }
 
-    /*
-     * CREATE VARIANT SELECTORS
-     */
+    // Create variant selectors.
     function renderVariants(product) {
       popupVariants.innerHTML = '';
+      selectedVariantId = null;
+      addButton.disabled = false;
 
       if (!product.variants || !product.variants.length) {
-        return;
-      }
-
-      const optionNames = Array.isArray(product.options)
-        ? product.options
-        : [];
-
-      /*
-       * If the product has no real options,
-       * simply use the first available variant.
-       */
-      if (
-        optionNames.length === 0 ||
-        (
-          optionNames.length === 1 &&
-          optionNames[0] === 'Title'
-        )
-      ) {
-        const availableVariant = product.variants.find(
-          variant => variant.available
-        );
-
-        if (availableVariant) {
-          selectedVariantId = availableVariant.id;
-
-          popupPrice.textContent = formatMoney(
-            availableVariant.price
-          );
-        } else {
-          selectedVariantId = null;
-          addButton.disabled = true;
-        }
-
+        addButton.disabled = true;
         return;
       }
 
@@ -168,94 +113,80 @@
       );
 
       if (!availableVariants.length) {
-        selectedVariantId = null;
         addButton.disabled = true;
 
-        const unavailableMessage =
-          document.createElement('p');
+        const message = document.createElement('p');
+        message.textContent = 'This product is currently unavailable.';
+        popupVariants.appendChild(message);
 
-        unavailableMessage.textContent =
-          'This product is currently unavailable.';
+        return;
+      }
 
-        popupVariants.appendChild(
-          unavailableMessage
+      const optionNames = Array.isArray(product.options)
+        ? product.options
+        : [];
+
+      if (
+        optionNames.length === 0 ||
+        (
+          optionNames.length === 1 &&
+          optionNames[0] === 'Title'
+        )
+      ) {
+        const availableVariant = availableVariants[0];
+
+        selectedVariantId = availableVariant.id;
+        popupPrice.textContent = formatMoney(
+          availableVariant.price
         );
 
         return;
       }
 
-      addButton.disabled = false;
+      optionNames.forEach((optionName, optionIndex) => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'tisso-variant';
 
-      /*
-       * CREATE ONE SELECT FOR EACH PRODUCT OPTION
-       */
-      optionNames.forEach(
-        (optionName, optionIndex) => {
+        const label = document.createElement('label');
+        label.textContent = optionName;
 
-          const wrapper =
-            document.createElement('div');
+        const select = document.createElement('select');
+        select.dataset.optionIndex = optionIndex;
 
-          wrapper.className = 'tisso-variant';
+        const values = [];
 
-          const label =
-            document.createElement('label');
+        availableVariants.forEach(variant => {
+          const value =
+            variant.options &&
+            variant.options[optionIndex];
 
-          label.textContent = optionName;
+          if (
+            value &&
+            !values.includes(value)
+          ) {
+            values.push(value);
+          }
+        });
 
-          const select =
-            document.createElement('select');
+        values.forEach(value => {
+          const option = document.createElement('option');
 
-          select.dataset.optionIndex =
-            optionIndex;
+          option.value = value;
+          option.textContent = value;
 
-          /*
-           * GET UNIQUE OPTION VALUES
-           */
-          const values = [];
+          select.appendChild(option);
+        });
 
-          availableVariants.forEach(
-            variant => {
+        wrapper.appendChild(label);
+        wrapper.appendChild(select);
 
-              const value =
-                variant.options &&
-                variant.options[optionIndex];
-
-              if (
-                value &&
-                !values.includes(value)
-              ) {
-                values.push(value);
-              }
-            }
-          );
-
-          /*
-           * ADD OPTIONS TO SELECT
-           */
-          values.forEach(value => {
-
-            const option =
-              document.createElement('option');
-
-            option.value = value;
-            option.textContent = value;
-
-            select.appendChild(option);
-          });
-
-          wrapper.appendChild(label);
-          wrapper.appendChild(select);
-
-          popupVariants.appendChild(wrapper);
-        }
-      );
+        popupVariants.appendChild(wrapper);
+      });
 
       updateSelectedVariant();
     }
 
-    /*
-     * FIND SELECTED VARIANT
-     */
+    // Find selected variant.
     function updateSelectedVariant() {
       if (!currentProduct) return;
 
@@ -263,9 +194,6 @@
         ...popupVariants.querySelectorAll('select')
       ];
 
-      /*
-       * Products without selectable options
-       */
       if (!selects.length) {
         const availableVariant =
           currentProduct.variants.find(
@@ -273,13 +201,10 @@
           );
 
         if (availableVariant) {
-          selectedVariantId =
-            availableVariant.id;
+          selectedVariantId = availableVariant.id;
 
           popupPrice.textContent =
-            formatMoney(
-              availableVariant.price
-            );
+            formatMoney(availableVariant.price);
 
           addButton.disabled = false;
         }
@@ -287,16 +212,13 @@
         return;
       }
 
-      const selectedOptions =
-        selects.map(select => select.value);
+      const selectedOptions = selects.map(
+        select => select.value
+      );
 
-      /*
-       * FIND EXACT MATCHING VARIANT
-       */
       const variant =
         currentProduct.variants.find(
           productVariant => {
-
             if (
               !productVariant.options ||
               productVariant.options.length === 0
@@ -311,22 +233,19 @@
           }
         );
 
-      /*
-       * VALID VARIANT
-       */
       if (variant) {
-
-        selectedVariantId = variant.id;
-
-        popupPrice.textContent =
-          formatMoney(variant.price);
-
         if (variant.available) {
+          selectedVariantId = variant.id;
+
+          popupPrice.textContent =
+            formatMoney(variant.price);
+
           addButton.disabled = false;
+
           popupError.hidden = true;
+          popupError.textContent = '';
         } else {
           selectedVariantId = null;
-
           addButton.disabled = true;
 
           popupError.textContent =
@@ -334,11 +253,8 @@
 
           popupError.hidden = false;
         }
-
       } else {
-
         selectedVariantId = null;
-
         addButton.disabled = true;
 
         popupError.textContent =
@@ -348,21 +264,16 @@
       }
     }
 
-    /*
-     * ADD PRODUCT TO SHOPIFY CART
-     */
+    // Add product to Shopify cart.
     async function addToCart(variantId) {
-
       const response = await fetch(
         `${window.Shopify.routes.root}cart/add.js`,
         {
           method: 'POST',
-
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
           },
-
           body: JSON.stringify({
             items: [
               {
@@ -375,22 +286,17 @@
       );
 
       if (!response.ok) {
-
         let errorMessage =
           'Unable to add product to cart.';
 
         try {
-          const errorData =
-            await response.json();
+          const errorData = await response.json();
 
           if (errorData.message) {
-            errorMessage =
-              errorData.message;
+            errorMessage = errorData.message;
           }
         } catch (error) {
-          /*
-           * Keep default error message
-           */
+          // Keep default error message.
         }
 
         throw new Error(errorMessage);
@@ -399,16 +305,10 @@
       return response.json();
     }
 
-    /*
-     * PRODUCT + BUTTON CLICK
-     *
-     * Event delegation is used so it also works
-     * more reliably inside Shopify Theme Editor.
-     */
+    // Open product popup.
     document.addEventListener(
       'click',
       function (event) {
-
         const openButton =
           event.target.closest(
             '[data-product-popup-open]'
@@ -425,7 +325,7 @@
 
         const productJSON =
           card.querySelector(
-            '[data-product-data] script'
+            'script[data-product-data]'
           );
 
         if (!productJSON) {
@@ -437,16 +337,13 @@
         }
 
         try {
-
           const product =
             JSON.parse(
               productJSON.textContent
             );
 
           openPopup(product);
-
         } catch (error) {
-
           console.error(
             'Tisso: Could not read product data.',
             error
@@ -455,13 +352,10 @@
       }
     );
 
-    /*
-     * CLOSE POPUP
-     */
+    // Close popup.
     popup.addEventListener(
       'click',
       function (event) {
-
         const closeButton =
           event.target.closest(
             '[data-product-popup-close]'
@@ -473,9 +367,7 @@
       }
     );
 
-    /*
-     * VARIANT CHANGE
-     */
+    // Handle variant changes.
     popupVariants.addEventListener(
       'change',
       function () {
@@ -483,17 +375,13 @@
       }
     );
 
-    /*
-     * ADD TO CART
-     */
+    // Add selected variant to cart.
     form.addEventListener(
       'submit',
       async function (event) {
-
         event.preventDefault();
 
         if (!selectedVariantId) {
-
           popupError.textContent =
             'Please select a valid variant.';
 
@@ -513,18 +401,12 @@
           '<span>ADDING...</span><span>→</span>';
 
         try {
-
           await addToCart(
             selectedVariantId
           );
 
-          /*
-           * Go directly to Shopify cart
-           */
           window.location.href = '/cart';
-
         } catch (error) {
-
           console.error(
             'Tisso Add to Cart Error:',
             error
@@ -544,13 +426,10 @@
       }
     );
 
-    /*
-     * ESCAPE KEY CLOSES POPUP
-     */
+    // Close popup with Escape.
     document.addEventListener(
       'keydown',
       function (event) {
-
         if (
           event.key === 'Escape' &&
           popup.classList.contains('is-open')
@@ -561,29 +440,17 @@
     );
   }
 
-  /*
-   * INITIAL PAGE LOAD
-   */
-  if (
-    document.readyState === 'loading'
-  ) {
-
+  // Initialize on page load.
+  if (document.readyState === 'loading') {
     document.addEventListener(
       'DOMContentLoaded',
       initTissoGiftGuide
     );
-
   } else {
-
     initTissoGiftGuide();
   }
 
-  /*
-   * SHOPIFY THEME EDITOR
-   *
-   * Re-initialize when Shopify reloads
-   * or changes a section.
-   */
+  // Reinitialize in Shopify Theme Editor.
   document.addEventListener(
     'shopify:section:load',
     function () {
