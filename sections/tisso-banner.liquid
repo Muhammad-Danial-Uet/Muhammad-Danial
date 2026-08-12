@@ -1,37 +1,19 @@
 <section class="tisso-products" data-tisso-grid>
-
   <div class="tisso-products__header">
-    <button
-      type="button"
-      class="tisso-mobile-menu-button"
-      aria-label="Open menu"
-      aria-expanded="false"
-      data-tisso-mobile-menu-button
-    >
-      <span aria-hidden="true">☰</span>
-    </button>
-
     <h2>{{ section.settings.heading }}</h2>
   </div>
 
-  <div
-    class="tisso-products__grid"
-    data-tisso-mobile-menu
-  >
-
+  <div class="tisso-products__grid">
     {% for block in section.blocks %}
       {% assign product = block.settings.product %}
 
-      {% if product != blank %}
-
-        <article
-          class="tisso-product-card"
-          {{ block.shopify_attributes }}
-          data-product-card
-        >
-
+      <article
+        class="tisso-product-card"
+        {{ block.shopify_attributes }}
+        data-product-card
+      >
+        {% if product != blank %}
           <div class="tisso-product-card__image-wrapper">
-
             {% if product.featured_image %}
               {{
                 product.featured_image
@@ -51,20 +33,19 @@
             >
               <span aria-hidden="true">+</span>
             </button>
-
           </div>
 
           <script type="application/json" data-product-data>
             {{ product | json }}
           </script>
-
-        </article>
-
-      {% endif %}
+        {% else %}
+          <div class="tisso-product-card__placeholder">
+            <span>Select product</span>
+          </div>
+        {% endif %}
+      </article>
     {% endfor %}
-
   </div>
-
 </section>
 
 <div
@@ -72,7 +53,6 @@
   data-tisso-popup
   aria-hidden="true"
 >
-
   <div
     class="tisso-popup__overlay"
     data-product-popup-close
@@ -84,7 +64,6 @@
     aria-modal="true"
     aria-labelledby="tisso-popup-title"
   >
-
     <button
       type="button"
       class="tisso-popup__close"
@@ -103,7 +82,6 @@
     </div>
 
     <div class="tisso-popup__content">
-
       <h2
         id="tisso-popup-title"
         data-popup-title
@@ -120,7 +98,6 @@
       ></div>
 
       <form data-add-to-cart-form>
-
         <div
           class="tisso-popup__variants"
           data-popup-variants
@@ -131,13 +108,8 @@
           class="tisso-add-button"
           data-add-to-cart
         >
-          <span data-add-to-cart-text>
-            ADD TO CART
-          </span>
-
-          <span class="tisso-add-button__arrow">
-            →
-          </span>
+          <span data-add-to-cart-text>ADD TO CART</span>
+          <span class="tisso-add-button__arrow">→</span>
         </button>
 
         <p
@@ -145,30 +117,10 @@
           data-popup-error
           hidden
         ></p>
-
       </form>
-
     </div>
-
   </div>
-
 </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  const button = document.querySelector('[data-tisso-mobile-menu-button]');
-  const menu = document.querySelector('[data-tisso-mobile-menu]');
-
-  if (!button || !menu) return;
-
-  button.addEventListener('click', function () {
-    const isOpen = button.getAttribute('aria-expanded') === 'true';
-
-    button.setAttribute('aria-expanded', String(!isOpen));
-    menu.hidden = isOpen;
-  });
-});
-</script>
 
 {% schema %}
 {
@@ -197,7 +149,27 @@ document.addEventListener('DOMContentLoaded', function () {
   ],
   "presets": [
     {
-      "name": "Tisso Product Grid"
+      "name": "Tisso Product Grid",
+      "blocks": [
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        }
+      ]
     }
   ]
 }
