@@ -1,7 +1,7 @@
 <section class="tisso-products" data-tisso-grid>
 
   <div class="tisso-products__header">
-    <h2>Tisso vision in the wild</h2>
+    <h2>{{ section.settings.heading }}</h2>
   </div>
 
   <div class="tisso-products__grid">
@@ -26,10 +26,11 @@
                 | image_tag:
                   loading: 'lazy',
                   class: 'tisso-product-card__image',
-                  alt: product.title | escape
+                  alt: product.featured_image.alt | default: product.title | escape
               }}
             {% endif %}
 
+            <!-- PLUS HOTSPOT -->
             <button
               type="button"
               class="tisso-hotspot"
@@ -41,7 +42,11 @@
 
           </div>
 
-          <script type="application/json" data-product-data>
+          <!-- PRODUCT DATA -->
+          <script
+            type="application/json"
+            data-product-data
+          >
             {{ product | json }}
           </script>
 
@@ -54,17 +59,25 @@
 
 </section>
 
+
+<!-- =========================================
+     PRODUCT POPUP
+     ========================================= -->
+
 <div
   class="tisso-popup"
   data-tisso-popup
   aria-hidden="true"
 >
 
+  <!-- DARK OVERLAY -->
   <div
     class="tisso-popup__overlay"
     data-product-popup-close
   ></div>
 
+
+  <!-- POPUP WINDOW -->
   <div
     class="tisso-popup__dialog"
     role="dialog"
@@ -72,6 +85,7 @@
     aria-labelledby="tisso-popup-title"
   >
 
+    <!-- CLOSE BUTTON -->
     <button
       type="button"
       class="tisso-popup__close"
@@ -81,14 +95,20 @@
       ×
     </button>
 
+
+    <!-- PRODUCT IMAGE -->
     <div class="tisso-popup__image">
+
       <img
         src=""
         alt=""
         data-popup-image
       >
+
     </div>
 
+
+    <!-- PRODUCT INFORMATION -->
     <div class="tisso-popup__content">
 
       <h2
@@ -96,16 +116,20 @@
         data-popup-title
       ></h2>
 
+
       <div
         class="tisso-popup__price"
         data-popup-price
       ></div>
+
 
       <div
         class="tisso-popup__description"
         data-popup-description
       ></div>
 
+
+      <!-- VARIANTS + ADD TO CART -->
       <form data-add-to-cart-form>
 
         <div
@@ -113,16 +137,24 @@
           data-popup-variants
         ></div>
 
+
+        <!-- ADD TO CART BUTTON -->
         <button
           type="submit"
           class="tisso-add-button"
           data-add-to-cart
         >
-          <span data-add-to-cart-text>ADD TO CART</span>
+          <span data-add-to-cart-text>
+            ADD TO CART
+          </span>
 
-          <span class="tisso-add-button__arrow">→</span>
+          <span class="tisso-add-button__arrow">
+            →
+          </span>
         </button>
 
+
+        <!-- ERROR -->
         <p
           class="tisso-popup__error"
           data-popup-error
@@ -137,629 +169,23 @@
 
 </div>
 
-<script>
-(function() {
-
-  const popup = document.querySelector('[data-tisso-popup]');
-
-  if (!popup) {
-    return;
-  }
-
-  let activeProduct = null;
-  let activeVariant = null;
-
-  const popupImage =
-    popup.querySelector('[data-popup-image]');
-
-  const popupTitle =
-    popup.querySelector('[data-popup-title]');
-
-  const popupPrice =
-    popup.querySelector('[data-popup-price]');
-
-  const popupDescription =
-    popup.querySelector('[data-popup-description]');
-
-  const popupVariants =
-    popup.querySelector('[data-popup-variants]');
-
-  const popupForm =
-    popup.querySelector('[data-add-to-cart-form]');
-
-  const popupError =
-    popup.querySelector('[data-popup-error]');
-
-  const addButton =
-    popup.querySelector('[data-add-to-cart]');
-
-  const addButtonText =
-    popup.querySelector('[data-add-to-cart-text]');
-
-  function formatMoney(cents) {
-
-    if (
-      window.Shopify &&
-      typeof window.Shopify.formatMoney === 'function'
-    ) {
-      return window.Shopify.formatMoney(
-        cents,
-        {{ shop.money_format | json }}
-      );
-    }
-
-    return (
-      Number(cents) / 100
-    ).toFixed(2);
-  }
-
-  function getImage(product) {
-
-    if (
-      product.featured_image &&
-      product.featured_image.src
-    ) {
-      return product.featured_image.src;
-    }
-
-    if (
-      product.images &&
-      product.images.length
-    ) {
-      return product.images[0];
-    }
-
-    return '';
-  }
-
-  function getInitialVariant(product) {
-
-    if (!product.variants || !product.variants.length) {
-      return null;
-    }
-
-    return (
-      product.variants.find(function(variant) {
-        return variant.available;
-      }) ||
-      product.variants[0]
-    );
-  }
-
-  function getVariantFromSelections() {
-
-    if (!activeProduct) {
-      return null;
-    }
-
-    const selects =
-      popupVariants.querySelectorAll('select');
-
-    const selectedOptions =
-      Array.from(selects).map(function(select) {
-        return select.value;
-      });
-
-    return activeProduct.variants.find(
-      function(variant) {
-
-        return variant.options.every(
-          function(option, index) {
-            return option === selectedOptions[index];
-          }
-        );
-
-      }
-    ) || null;
-  }
-
-  function updateVariant() {
-
-    activeVariant =
-      getVariantFromSelections();
-
-    if (!activeVariant) {
-
-      addButton.disabled = true;
-      addButtonText.textContent = 'UNAVAILABLE';
-
-      return;
-    }
-
-    popupPrice.textContent =
-      formatMoney(activeVariant.price);
-
-    if (!activeVariant.available) {
-
-      addButton.disabled = true;
-      addButtonText.textContent = 'SOLD OUT';
-
-      return;
-    }
-
-    addButton.disabled = false;
-    addButtonText.textContent = 'ADD TO CART';
-  }
-
-  function buildVariants(product) {
-
-    popupVariants.innerHTML = '';
-
-    if (
-      !product.options ||
-      !product.options.length
-    ) {
-      return;
-    }
-
-    const initialVariant =
-      getInitialVariant(product);
-
-    product.options.forEach(
-      function(optionName, optionIndex) {
-
-        const wrapper =
-          document.createElement('div');
-
-        wrapper.className =
-          'tisso-variant';
-
-        const label =
-          document.createElement('label');
-
-        label.textContent =
-          optionName;
-
-        const select =
-          document.createElement('select');
-
-        select.name =
-          'option-' + optionIndex;
-
-        const values = [];
-
-        product.variants.forEach(
-          function(variant) {
-
-            const value =
-              variant.options[optionIndex];
-
-            if (
-              value &&
-              !values.includes(value)
-            ) {
-              values.push(value);
-            }
-
-          }
-        );
-
-        values.forEach(
-          function(value) {
-
-            const option =
-              document.createElement('option');
-
-            option.value = value;
-            option.textContent = value;
-
-            if (
-              initialVariant &&
-              initialVariant.options[optionIndex] === value
-            ) {
-              option.selected = true;
-            }
-
-            option.disabled =
-              !product.variants.some(
-                function(variant) {
-
-                  return (
-                    variant.available &&
-                    variant.options[optionIndex] === value
-                  );
-
-                }
-              );
-
-            select.appendChild(option);
-
-          }
-        );
-
-        select.addEventListener(
-          'change',
-          function() {
-            updateVariant();
-          }
-        );
-
-        wrapper.appendChild(label);
-        wrapper.appendChild(select);
-
-        popupVariants.appendChild(wrapper);
-
-      }
-    );
-  }
-
-  function openPopup(product) {
-
-    activeProduct = product;
-
-    popupError.hidden = true;
-    popupError.textContent = '';
-
-    popupTitle.textContent =
-      product.title;
-
-    popupDescription.innerHTML =
-      product.description || '';
-
-    const image =
-      getImage(product);
-
-    if (image) {
-
-      popupImage.src = image;
-      popupImage.alt = product.title;
-
-    } else {
-
-      popupImage.removeAttribute('src');
-      popupImage.alt = '';
-
-    }
-
-    buildVariants(product);
-
-    activeVariant =
-      getInitialVariant(product);
-
-    if (activeVariant) {
-
-      popupPrice.textContent =
-        formatMoney(activeVariant.price);
-
-    }
-
-    updateVariant();
-
-    popup.classList.add('is-open');
-
-    popup.setAttribute(
-      'aria-hidden',
-      'false'
-    );
-
-    document.body.classList.add(
-      'tisso-popup-open'
-    );
-  }
-
-  function closePopup() {
-
-    popup.classList.remove('is-open');
-
-    popup.setAttribute(
-      'aria-hidden',
-      'true'
-    );
-
-    document.body.classList.remove(
-      'tisso-popup-open'
-    );
-
-    activeProduct = null;
-    activeVariant = null;
-  }
-
-  document.addEventListener(
-    'click',
-    function(event) {
-
-      const openButton =
-        event.target.closest(
-          '[data-product-popup-open]'
-        );
-
-      if (openButton) {
-
-        const card =
-          openButton.closest(
-            '[data-product-card]'
-          );
-
-        if (!card) {
-          return;
-        }
-
-        const data =
-          card.querySelector(
-            '[data-product-data]'
-          );
-
-        if (!data) {
-          return;
-        }
-
-        try {
-
-          const product =
-            JSON.parse(data.textContent);
-
-          openPopup(product);
-
-        } catch (error) {
-
-          console.error(
-            'Tisso product data error:',
-            error
-          );
-
-        }
-
-        return;
-      }
-
-      if (
-        event.target.closest(
-          '[data-product-popup-close]'
-        )
-      ) {
-        closePopup();
-      }
-
-    }
-  );
-
-  document.addEventListener(
-    'keydown',
-    function(event) {
-
-      if (
-        event.key === 'Escape' &&
-        popup.classList.contains('is-open')
-      ) {
-        closePopup();
-      }
-
-    }
-  );
-
-  popupForm.addEventListener(
-    'submit',
-    async function(event) {
-
-      event.preventDefault();
-
-      if (
-        !activeVariant ||
-        !activeVariant.id
-      ) {
-        return;
-      }
-
-      if (!activeVariant.available) {
-        return;
-      }
-
-      addButton.disabled = true;
-      addButtonText.textContent = 'ADDING...';
-
-      popupError.hidden = true;
-      popupError.textContent = '';
-
-      const items = [
-        {
-          id: Number(activeVariant.id),
-          quantity: 1
-        }
-      ];
-
-      const selectedOptions =
-        Array.from(
-          popupVariants.querySelectorAll('select')
-        ).map(function(select) {
-          return select.value;
-        });
-
-      let selectedColor = '';
-      let selectedSize = '';
-
-      if (activeProduct.options) {
-
-        activeProduct.options.forEach(
-          function(optionName, index) {
-
-            const option =
-              optionName.toLowerCase().trim();
-
-            const value =
-              String(
-                selectedOptions[index] || ''
-              ).toLowerCase().trim();
-
-            if (
-              option === 'color' ||
-              option === 'colour'
-            ) {
-              selectedColor = value;
-            }
-
-            if (option === 'size') {
-              selectedSize = value;
-            }
-
-          }
-        );
-
-      }
-
-      if (
-        selectedColor === 'black' &&
-        selectedSize === 'medium'
-      ) {
-
-        const companionProductHandle =
-          {{ section.settings.companion_product.handle | json }};
-
-        if (companionProductHandle) {
-
-          try {
-
-            const productResponse =
-              await fetch(
-                '/products/' +
-                companionProductHandle +
-                '.js'
-              );
-
-            if (productResponse.ok) {
-
-              const companionProduct =
-                await productResponse.json();
-
-              const companionVariant =
-                companionProduct.variants.find(
-                  function(variant) {
-                    return variant.available;
-                  }
-                ) ||
-                companionProduct.variants[0];
-
-              if (
-                companionVariant &&
-                Number(companionVariant.id) !==
-                Number(activeVariant.id)
-              ) {
-
-                items.push({
-                  id: Number(companionVariant.id),
-                  quantity: 1
-                });
-
-              }
-
-            }
-
-          } catch (error) {
-
-            console.error(
-              'Companion product error:',
-              error
-            );
-
-          }
-
-        }
-
-      }
-
-      try {
-
-        const response =
-          await fetch(
-            window.Shopify.routes.root +
-            'cart/add.js',
-            {
-              method: 'POST',
-
-              headers: {
-                'Content-Type':
-                  'application/json',
-
-                'Accept':
-                  'application/json'
-              },
-
-              body: JSON.stringify({
-                items: items
-              })
-            }
-          );
-
-        const result =
-          await response.json();
-
-        if (!response.ok) {
-
-          throw new Error(
-            result.description ||
-            result.message ||
-            'Unable to add product to cart.'
-          );
-
-        }
-
-        addButtonText.textContent =
-          'ADDED ✓';
-
-        document.dispatchEvent(
-          new CustomEvent('cart:updated', {
-            detail: result
-          })
-        );
-
-        document.dispatchEvent(
-          new CustomEvent('cart:refresh')
-        );
-
-        setTimeout(
-          function() {
-
-            closePopup();
-
-            addButton.disabled = false;
-
-            addButtonText.textContent =
-              'ADD TO CART';
-
-          },
-          700
-        );
-
-      } catch (error) {
-
-        console.error(
-          'Tisso cart error:',
-          error
-        );
-
-        popupError.textContent =
-          error.message ||
-          'Something went wrong. Please try again.';
-
-        popupError.hidden = false;
-
-        addButton.disabled = false;
-
-        addButtonText.textContent =
-          'ADD TO CART';
-
-      }
-
-    }
-  );
-
-})();
-</script>
 
 {% schema %}
 {
   "name": "Tisso Product Grid",
   "settings": [
     {
-      "type": "product",
-      "id": "companion_product",
-      "label": "Soft Winter Jacket",
-      "info": "Select the Soft Winter Jacket that should be added when Color is Black and Size is Medium."
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Tisso vision in the wild"
     }
   ],
   "blocks": [
     {
       "type": "product",
       "name": "Product",
+      "limit": 6,
       "settings": [
         {
           "type": "product",
