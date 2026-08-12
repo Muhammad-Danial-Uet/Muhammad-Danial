@@ -24,18 +24,8 @@
 
 <!-- MAIN BANNER -->
 
-<div class="tisso-banner__content">
-
-  <div class="tisso-banner__inner">
-
-    YOUR EXISTING TITLE CODE
-
-    YOUR EXISTING DESCRIPTION CODE
-
-    YOUR EXISTING BUTTON CODE
-
-  </div>
-
+<div
+  class="tisso-banner__content"
   {% if section.settings.banner_image != blank %}
     style="
       background-image: url('{{ section.settings.banner_image | image_url: width: 2400 | escape }}');
@@ -45,9 +35,6 @@
     "
   {% endif %}
 >
-
-</div>
-
 
     <div class="tisso-banner__inner">
 
