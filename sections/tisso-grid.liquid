@@ -1,4 +1,5 @@
 <section class="tisso-products" data-tisso-grid>
+
   <div class="tisso-products__header">
     <h2>{{ section.settings.heading }}</h2>
   </div>
@@ -14,7 +15,6 @@
           class="tisso-product-card"
           {{ block.shopify_attributes }}
           data-product-card
-          data-product-handle="{{ product.handle }}"
         >
 
           <div class="tisso-product-card__image-wrapper">
@@ -26,14 +26,15 @@
                 | image_tag:
                   loading: 'lazy',
                   class: 'tisso-product-card__image',
-                  alt: product.featured_image.alt | escape
+                  alt: product.featured_image.alt | default: product.title | escape
               }}
             {% endif %}
 
+            <!-- PLUS BUTTON -->
             <button
               type="button"
               class="tisso-hotspot"
-              aria-label="View {{ product.title }}"
+              aria-label="View {{ product.title | escape }}"
               data-product-popup-open
             >
               <span>+</span>
@@ -41,15 +42,10 @@
 
           </div>
 
-          <div
-            class="tisso-product-data"
-            data-product-data
-            hidden
-          >
-            <script type="application/json">
-              {{ product | json }}
-            </script>
-          </div>
+          <!-- PRODUCT DATA FOR JAVASCRIPT -->
+          <script type="application/json" data-product-data>
+            {{ product | json }}
+          </script>
 
         </article>
 
@@ -57,10 +53,13 @@
     {% endfor %}
 
   </div>
+
 </section>
 
 
-<!-- PRODUCT POPUP -->
+<!-- =========================
+     PRODUCT POPUP
+     ========================= -->
 
 <div
   class="tisso-popup"
@@ -89,6 +88,9 @@
       ×
     </button>
 
+
+    <!-- PRODUCT IMAGE -->
+
     <div class="tisso-popup__image">
       <img
         src=""
@@ -96,6 +98,9 @@
         data-popup-image
       >
     </div>
+
+
+    <!-- PRODUCT INFORMATION -->
 
     <div class="tisso-popup__content">
 
@@ -114,6 +119,9 @@
         data-popup-description
       ></div>
 
+
+      <!-- VARIANTS -->
+
       <form data-add-to-cart-form>
 
         <div
@@ -121,12 +129,15 @@
           data-popup-variants
         ></div>
 
+
+        <!-- ADD TO CART -->
+
         <button
           type="submit"
           class="tisso-add-button"
           data-add-to-cart
         >
-          <span>ADD TO CART</span>
+          <span data-add-to-cart-text>ADD TO CART</span>
           <span>→</span>
         </button>
 
@@ -141,6 +152,7 @@
     </div>
 
   </div>
+
 </div>
 
 
@@ -152,7 +164,7 @@
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Tisso vison in the wild"
+      "default": "Tisso vision in the wild"
     }
   ],
   "blocks": [
