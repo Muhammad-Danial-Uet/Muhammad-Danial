@@ -256,8 +256,8 @@
   position: absolute;
   top: var(--hotspot-y);
   left: var(--hotspot-x);
-  width: 34px;
-  height: 34px;
+  width: 24px;
+  height: 24px;
   padding: 0;
   border: 0;
   border-radius: 50%;
@@ -281,7 +281,7 @@
 }
 
 .tisso-hotspot span {
-  font-size: 16px;
+  font-size: 21px;
   line-height: 1;
 }
 
