@@ -1,10 +1,23 @@
 <section class="tisso-products" data-tisso-grid>
 
   <div class="tisso-products__header">
+    <button
+      type="button"
+      class="tisso-mobile-menu-button"
+      aria-label="Open menu"
+      aria-expanded="false"
+      data-tisso-mobile-menu-button
+    >
+      <span aria-hidden="true">☰</span>
+    </button>
+
     <h2>{{ section.settings.heading }}</h2>
   </div>
 
-  <div class="tisso-products__grid">
+  <div
+    class="tisso-products__grid"
+    data-tisso-mobile-menu
+  >
 
     {% for block in section.blocks %}
       {% assign product = block.settings.product %}
@@ -143,25 +156,17 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+  const button = document.querySelector('[data-tisso-mobile-menu-button]');
+  const menu = document.querySelector('[data-tisso-mobile-menu]');
 
-  const menuButton = document.querySelector('.tisso-mobile-menu-button');
-  const menu = document.querySelector('.tisso-mobile-menu');
+  if (!button || !menu) return;
 
-  if (!menuButton || !menu) return;
+  button.addEventListener('click', function () {
+    const isOpen = button.getAttribute('aria-expanded') === 'true';
 
-  menuButton.addEventListener('click', function () {
-
-    const isOpen = menuButton.getAttribute('aria-expanded') === 'true';
-
-    menuButton.setAttribute(
-      'aria-expanded',
-      String(!isOpen)
-    );
-
+    button.setAttribute('aria-expanded', String(!isOpen));
     menu.hidden = isOpen;
-
   });
-
 });
 </script>
 
