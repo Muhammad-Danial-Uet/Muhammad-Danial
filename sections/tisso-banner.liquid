@@ -1,19 +1,24 @@
 <section class="tisso-products" data-tisso-grid>
+
   <div class="tisso-products__header">
     <h2>{{ section.settings.heading }}</h2>
   </div>
 
   <div class="tisso-products__grid">
+
     {% for block in section.blocks %}
       {% assign product = block.settings.product %}
 
-      <article
-        class="tisso-product-card"
-        {{ block.shopify_attributes }}
-        data-product-card
-      >
-        {% if product != blank %}
+      {% if product != blank %}
+
+        <article
+          class="tisso-product-card"
+          {{ block.shopify_attributes }}
+          data-product-card
+        >
+
           <div class="tisso-product-card__image-wrapper">
+
             {% if product.featured_image %}
               {{
                 product.featured_image
@@ -25,6 +30,7 @@
               }}
             {% endif %}
 
+            <!-- PLUS HOTSPOT -->
             <button
               type="button"
               class="tisso-hotspot"
@@ -33,37 +39,52 @@
             >
               <span aria-hidden="true">+</span>
             </button>
+
           </div>
 
-          <script type="application/json" data-product-data>
+          <!-- PRODUCT DATA -->
+          <script
+            type="application/json"
+            data-product-data
+          >
             {{ product | json }}
           </script>
-        {% else %}
-          <div class="tisso-product-card__placeholder">
-            <span>Select product</span>
-          </div>
-        {% endif %}
-      </article>
+
+        </article>
+
+      {% endif %}
     {% endfor %}
+
   </div>
+
 </section>
+
+
+<!PRODUCT POPUP>
+  
 
 <div
   class="tisso-popup"
   data-tisso-popup
   aria-hidden="true"
 >
+
+  <!-- DARK OVERLAY -->
   <div
     class="tisso-popup__overlay"
     data-product-popup-close
   ></div>
 
+
+  <!-- POPUP WINDOW -->
   <div
     class="tisso-popup__dialog"
     role="dialog"
     aria-modal="true"
     aria-labelledby="tisso-popup-title"
   >
+
+    <!-- CLOSE BUTTON -->
     <button
       type="button"
       class="tisso-popup__close"
@@ -73,54 +94,80 @@
       ×
     </button>
 
+
+    <!-- PRODUCT IMAGE -->
     <div class="tisso-popup__image">
+
       <img
         src=""
         alt=""
         data-popup-image
       >
+
     </div>
 
+
+    <!-- PRODUCT INFORMATION -->
     <div class="tisso-popup__content">
+
       <h2
         id="tisso-popup-title"
         data-popup-title
       ></h2>
+
 
       <div
         class="tisso-popup__price"
         data-popup-price
       ></div>
 
+
       <div
         class="tisso-popup__description"
         data-popup-description
       ></div>
 
+
+      <!-- VARIANTS + ADD TO CART -->
       <form data-add-to-cart-form>
+
         <div
           class="tisso-popup__variants"
           data-popup-variants
         ></div>
 
+
+        <!-- ADD TO CART BUTTON -->
         <button
           type="submit"
           class="tisso-add-button"
           data-add-to-cart
         >
-          <span data-add-to-cart-text>ADD TO CART</span>
-          <span class="tisso-add-button__arrow">→</span>
+          <span data-add-to-cart-text>
+            ADD TO CART
+          </span>
+
+          <span class="tisso-add-button__arrow">
+            →
+          </span>
         </button>
 
+
+        <!-- ERROR -->
         <p
           class="tisso-popup__error"
           data-popup-error
           hidden
         ></p>
+
       </form>
+
     </div>
+
   </div>
+
 </div>
+
 
 {% schema %}
 {
@@ -149,27 +196,7 @@
   ],
   "presets": [
     {
-      "name": "Tisso Product Grid",
-      "blocks": [
-        {
-          "type": "product"
-        },
-        {
-          "type": "product"
-        },
-        {
-          "type": "product"
-        },
-        {
-          "type": "product"
-        },
-        {
-          "type": "product"
-        },
-        {
-          "type": "product"
-        }
-      ]
+      "name": "Tisso Product Grid"
     }
   ]
 }
