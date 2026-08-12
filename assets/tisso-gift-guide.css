@@ -33,22 +33,55 @@
 
 .tisso-banner__content {
   position: relative;
-  min-height: 620px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 70px 8%;
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
+  width: 100%;
+  min-height: 0;
+  padding: 0;
   overflow: hidden;
+  background: #ffffff;
+}
+
+.tisso-banner__background {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
 }
 
 .tisso-banner__inner {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 8%;
   z-index: 2;
   width: min(520px, 100%);
+  transform: translateY(-50%);
 }
+
+@media screen and (max-width: 749px) {
+
+  .tisso-banner__content {
+    width: 100%;
+    min-height: 0;
+    padding: 0;
+  }
+
+  .tisso-banner__background {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .tisso-banner__inner {
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 24px 20px;
+    text-align: center;
+    transform: none;
+  }
+
+}
+
 
 .tisso-banner__title {
   margin: 0 0 24px;
