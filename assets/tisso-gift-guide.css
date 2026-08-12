@@ -50,7 +50,7 @@
 
 .tisso-banner__inner {
   position: absolute;
-  top: 70%;
+  top: 100%;
   left: 8%;
   z-index: 2;
   width: min(520px, 100%);
