@@ -645,7 +645,6 @@ body.tisso-popup-open {
 
   .tisso-mobile-header {
     position: relative;
-    top: 50%;
     z-index: 50;
     display: flex;
     align-items: center;
@@ -657,17 +656,18 @@ body.tisso-popup-open {
     background: #f7f7f7;
   }
 
-  .tisso-mobile-brand {
-    font-size: 16px;
-    font-weight: 800;
-    line-height: 1;
-    letter-spacing: -0.03em;
-  }
-
+ .tisso-mobile-brand {
+  position: relative;
+  top: 2px;
+  font-size: 18px;
+  font-weight: 1000;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
   .tisso-mobile-menu-button {
     position: absolute;
     left: 7px;
-    top: 50%;
+    top: 55%;
     width: 30px;
     height: 30px;
     padding: 0;
