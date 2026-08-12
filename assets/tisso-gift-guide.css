@@ -13,7 +13,7 @@
   justify-content: space-between;
   gap: 30px;
   padding: 15px 5%;
-  background: #ffffff;
+  background: #F3F3F3;
   position: relative;
   z-index: 10;
 }
@@ -168,8 +168,8 @@
 .tisso-banner__announcement {
   padding: 12px 20px;
   text-align: center;
-  background: #000000;
-  color: #ffffff;
+  background: #F3F3F3;
+  color: #000000;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.05em;
