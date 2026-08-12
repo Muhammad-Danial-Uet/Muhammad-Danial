@@ -1,12 +1,17 @@
+/* =========================================================
+   TISSO GIFT GUIDE
+   ========================================================= */
+
 .tisso-banner {
   position: relative;
   overflow: hidden;
   background: #f7f7f7;
 }
 
-/* =========================
+
+/* =========================================================
    TOP BAR
-   ========================= */
+   ========================================================= */
 
 .tisso-banner__top {
   min-height: 72px;
@@ -16,12 +21,15 @@
   gap: 30px;
   padding: 15px 5%;
   background: #ffffff;
+  position: relative;
+  z-index: 10;
 }
 
 .tisso-banner__brand {
   font-size: 22px;
   font-weight: 800;
   letter-spacing: -0.04em;
+  white-space: nowrap;
 }
 
 .tisso-banner__message {
@@ -30,126 +38,278 @@
   font-size: 15px;
 }
 
-/* =========================
-   BANNER CONTENT
-   ========================= */
+
+/* =========================================================
+   MAIN BANNER
+   ========================================================= */
 
 .tisso-banner__content {
+  position: relative;
+
   min-height: 620px;
+
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
+
   padding: 70px 8%;
-  background:
-    linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.98) 0%,
-      rgba(255, 255, 255, 0.75) 35%,
-      rgba(255, 255, 255, 0) 70%
-    );
+
+  /*
+    The actual image is supplied by the
+    Shopify image_picker in tisso-banner.liquid.
+  */
+
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+
+  overflow: hidden;
 }
 
+
+/*
+   Make sure the banner content stays above
+   the background image.
+*/
+
 .tisso-banner__inner {
+  position: relative;
+  z-index: 2;
+
   width: min(520px, 100%);
 }
 
+
+/* =========================================================
+   BANNER TEXT
+   ========================================================= */
+
 .tisso-banner__title {
   margin: 0 0 24px;
+
   font-size: clamp(42px, 6vw, 78px);
   line-height: 0.95;
+
   letter-spacing: -0.06em;
+
+  color: #000000;
 }
 
 .tisso-banner__description {
   max-width: 460px;
+
   margin-bottom: 30px;
+
   font-size: 18px;
   line-height: 1.5;
+
+  color: #000000;
 }
 
-/* =========================
-   BUTTONS
-   ========================= */
+
+/* =========================================================
+   BUTTON BASE
+   ========================================================= */
 
 .tisso-button {
+  position: relative;
+
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
+
   gap: 30px;
+
   min-width: 190px;
+
   padding: 16px 22px;
+
   border: 1px solid transparent;
+
   text-decoration: none;
+
   font-weight: 700;
+
   cursor: pointer;
+
+  overflow: hidden;
+
+  isolation: isolate;
+
   transition:
-    background-color 180ms ease,
-    color 180ms ease,
-    border-color 180ms ease,
     transform 180ms ease,
     box-shadow 180ms ease;
 }
 
-/* General button hover movement */
+
+/*
+   Text and arrow must remain above
+   the animated color layer.
+*/
+
+.tisso-button > span {
+  position: relative;
+  z-index: 2;
+}
+
+
+/* =========================================================
+   GENERAL BUTTON HOVER
+   ========================================================= */
+
 .tisso-button:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* CHOOSE GIFT
-   Yellow → Black */
+
+/* =========================================================
+   CHOOSE GIFT
+   Yellow → Black
+   LEFT → RIGHT
+   ========================================================= */
+
 .tisso-button--yellow {
   background-color: #ffd600;
   color: #000000;
+
   border-color: #ffd600;
 }
 
-.tisso-button--yellow:hover {
+
+/*
+   Black layer starts outside the left side.
+*/
+
+.tisso-button--yellow::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
   background-color: #000000;
+
+  transform: scaleX(0);
+  transform-origin: left center;
+
+  transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+
+  z-index: 1;
+}
+
+
+/*
+   Slowly sweep black from left → right.
+*/
+
+.tisso-button--yellow:hover::before {
+  transform: scaleX(1);
+}
+
+.tisso-button--yellow:hover {
   color: #ffffff;
   border-color: #000000;
 }
 
-/* SHOP NOW
-   Black → Yellow */
+
+/* =========================================================
+   SHOP NOW
+   Black → Yellow
+   LEFT → RIGHT
+   ========================================================= */
+
 .tisso-button--black {
   background-color: #000000;
   color: #ffffff;
+
   border-color: #000000;
 }
 
-.tisso-button--black:hover {
+
+/*
+   Yellow layer starts outside the left side.
+*/
+
+.tisso-button--black::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
   background-color: #ffd600;
+
+  transform: scaleX(0);
+  transform-origin: left center;
+
+  transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+
+  z-index: 1;
+}
+
+
+/*
+   Slowly sweep yellow from left → right.
+*/
+
+.tisso-button--black:hover::before {
+  transform: scaleX(1);
+}
+
+.tisso-button--black:hover {
   color: #000000;
   border-color: #ffd600;
 }
 
-/* Arrow animation */
+
+/* =========================================================
+   BUTTON ARROW
+   ========================================================= */
+
 .tisso-button__arrow {
-  transition: transform 180ms ease;
+  position: relative;
+  z-index: 3;
+
+  transition:
+    transform 0.35s ease;
 }
 
 .tisso-button:hover .tisso-button__arrow {
-  transform: translateX(6px);
+  transform: translateX(7px);
 }
 
-/* =========================
-   ANNOUNCEMENT
-   ========================= */
+
+/* =========================================================
+   BOTTOM ANNOUNCEMENT
+   ========================================================= */
 
 .tisso-banner__announcement {
   padding: 12px 20px;
+
   text-align: center;
+
   background: #000000;
   color: #ffffff;
+
   font-size: 13px;
   font-weight: 700;
+
   letter-spacing: 0.05em;
 }
 
-/* =========================
+
+/* =========================================================
    PRODUCT GRID
-   ========================= */
+   ========================================================= */
 
 .tisso-products {
   padding: 70px 5%;
@@ -162,50 +322,87 @@
 
 .tisso-products__header h2 {
   margin: 0;
+
   font-size: clamp(32px, 4vw, 56px);
+
   letter-spacing: -0.05em;
+
+  color: #000000;
 }
 
 .tisso-products__grid {
   display: grid;
+
   grid-template-columns: repeat(3, 1fr);
+
   gap: 18px;
+}
+
+
+/* =========================================================
+   PRODUCT IMAGE
+   ========================================================= */
+
+.tisso-product-card {
+  position: relative;
 }
 
 .tisso-product-card__image-wrapper {
   position: relative;
+
   overflow: hidden;
+
   background: #f5f5f5;
+
   aspect-ratio: 1 / 1;
 }
 
 .tisso-product-card__image {
   width: 100%;
   height: 100%;
+
   display: block;
+
   object-fit: cover;
+
+  transition: transform 0.4s ease;
 }
 
-/* =========================
-   HOTSPOT
-   ========================= */
+.tisso-product-card:hover .tisso-product-card__image {
+  transform: scale(1.02);
+}
+
+
+/* =========================================================
+   PRODUCT HOTSPOT
+   ========================================================= */
 
 .tisso-hotspot {
   position: absolute;
+
   top: 50%;
   left: 50%;
+
   width: 34px;
   height: 34px;
+
   padding: 0;
+
   border: 0;
   border-radius: 50%;
+
   display: grid;
   place-items: center;
+
   transform: translate(-50%, -50%);
+
   background: #ffffff;
   color: #000000;
+
   cursor: pointer;
+
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+
   transition:
     transform 180ms ease,
     background-color 180ms ease,
@@ -214,6 +411,7 @@
 
 .tisso-hotspot:hover {
   transform: translate(-50%, -50%) scale(1.15);
+
   background: #000000;
   color: #ffffff;
 }
@@ -223,14 +421,18 @@
   line-height: 1;
 }
 
-/* =========================
-   POPUP
-   ========================= */
+
+/* =========================================================
+   PRODUCT POPUP
+   ========================================================= */
 
 .tisso-popup {
   position: fixed;
+
   inset: 0;
+
   z-index: 9999;
+
   display: none;
 }
 
@@ -238,51 +440,101 @@
   display: block;
 }
 
+
+/* Popup overlay */
+
 .tisso-popup__overlay {
   position: absolute;
+
   inset: 0;
+
   background: rgba(0, 0, 0, 0.55);
 }
 
+
+/* Popup dialog */
+
 .tisso-popup__dialog {
   position: absolute;
+
   top: 50%;
   left: 50%;
+
   width: min(900px, calc(100% - 30px));
+
   max-height: calc(100vh - 30px);
+
   overflow: auto;
+
   display: grid;
+
   grid-template-columns: 1fr 1fr;
+
   transform: translate(-50%, -50%);
+
   background: #ffffff;
 }
+
+
+/* =========================================================
+   POPUP CLOSE BUTTON
+   ========================================================= */
 
 .tisso-popup__close {
   position: absolute;
+
   top: 12px;
   right: 12px;
-  z-index: 2;
+
+  z-index: 5;
+
   width: 38px;
   height: 38px;
+
   border: 0;
   border-radius: 50%;
+
   background: #ffffff;
+
   font-size: 28px;
   line-height: 1;
+
   cursor: pointer;
+
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
 }
+
+.tisso-popup__close:hover {
+  background: #000000;
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   POPUP IMAGE
+   ========================================================= */
 
 .tisso-popup__image {
   min-height: 500px;
+
   background: #f5f5f5;
 }
 
 .tisso-popup__image img {
   width: 100%;
   height: 100%;
+
   display: block;
+
   object-fit: cover;
 }
+
+
+/* =========================================================
+   POPUP CONTENT
+   ========================================================= */
 
 .tisso-popup__content {
   padding: 55px 40px 40px;
@@ -290,20 +542,29 @@
 
 .tisso-popup__content h2 {
   margin: 0 0 12px;
+
   font-size: 32px;
+
   line-height: 1.05;
 }
 
 .tisso-popup__price {
   margin-bottom: 20px;
+
   font-size: 20px;
   font-weight: 700;
 }
 
 .tisso-popup__description {
   margin-bottom: 30px;
+
   line-height: 1.5;
 }
+
+
+/* =========================================================
+   PRODUCT VARIANTS
+   ========================================================= */
 
 .tisso-variant {
   margin-bottom: 18px;
@@ -311,74 +572,173 @@
 
 .tisso-variant label {
   display: block;
+
   margin-bottom: 7px;
+
   font-size: 13px;
   font-weight: 700;
+
   text-transform: uppercase;
 }
 
 .tisso-variant select {
   width: 100%;
+
   min-height: 48px;
+
   padding: 10px;
+
   border: 1px solid #000000;
+
   background: #ffffff;
+
+  color: #000000;
 }
 
+
+/* =========================================================
+   ADD TO CART
+   ========================================================= */
+
 .tisso-add-button {
+  position: relative;
+
   width: 100%;
+
   margin-top: 15px;
+
   padding: 17px 20px;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 0;
+
+  border: 1px solid #000000;
+
   background: #000000;
   color: #ffffff;
+
   cursor: pointer;
+
   font-weight: 700;
+
+  overflow: hidden;
+
+  isolation: isolate;
+}
+
+.tisso-add-button::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background: #ffd600;
+
+  transform: scaleX(0);
+
+  transform-origin: left center;
+
+  transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+
+  z-index: 1;
+}
+
+.tisso-add-button:hover::before {
+  transform: scaleX(1);
+}
+
+.tisso-add-button > span {
+  position: relative;
+
+  z-index: 2;
+}
+
+.tisso-add-button:hover {
+  color: #000000;
 }
 
 .tisso-add-button:disabled {
   opacity: 0.5;
+
   cursor: not-allowed;
 }
 
+.tisso-add-button:disabled::before {
+  display: none;
+}
+
+
+/* =========================================================
+   POPUP ERROR
+   ========================================================= */
+
 .tisso-popup__error {
   margin-top: 15px;
+
   color: #c00000;
 }
+
+
+/* Prevent background scrolling */
 
 body.tisso-popup-open {
   overflow: hidden;
 }
 
-/* =========================
+
+/* =========================================================
    MOBILE
-   ========================= */
+   ========================================================= */
 
 @media screen and (max-width: 749px) {
+
   .tisso-banner__top {
     min-height: 60px;
+
     padding: 12px 16px;
+
     flex-wrap: wrap;
+
+    gap: 12px;
+  }
+
+  .tisso-banner__brand {
+    font-size: 18px;
   }
 
   .tisso-banner__message {
     order: 3;
+
     flex-basis: 100%;
+
+    font-size: 14px;
   }
 
   .tisso-banner__top .tisso-button {
     min-width: 130px;
+
     padding: 12px 14px;
   }
 
+
+  /* Main banner */
+
   .tisso-banner__content {
     min-height: 520px;
+
     padding: 50px 24px;
+
     justify-content: center;
+
     text-align: center;
+
+    background-position: center center;
   }
 
   .tisso-banner__inner {
@@ -390,27 +750,46 @@ body.tisso-popup-open {
     margin-right: auto;
   }
 
+
+  /* Products */
+
   .tisso-products {
     padding: 45px 16px;
   }
 
   .tisso-products__grid {
     grid-template-columns: repeat(2, 1fr);
+
     gap: 10px;
   }
 
+
+  /* Popup */
+
   .tisso-popup__dialog {
     width: calc(100% - 20px);
+
     max-height: calc(100vh - 20px);
+
     grid-template-columns: 1fr;
   }
 
   .tisso-popup__image {
     min-height: 280px;
+
     max-height: 40vh;
   }
 
   .tisso-popup__content {
     padding: 30px 20px 25px;
+  }
+
+  .tisso-popup__content h2 {
+    font-size: 26px;
+  }
+
+  .tisso-hotspot {
+    width: 32px;
+    height: 32px;
   }
 }
