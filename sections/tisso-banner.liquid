@@ -1,6 +1,5 @@
-<section class="tisso-banner">
+<section class="tisso-banner" id="tisso-banner-{{ section.id }}">
 
-  <!-- MOBILE HEADER -->
   <div class="tisso-mobile-header">
 
     <button
@@ -19,7 +18,6 @@
 
   </div>
 
-  <!-- MOBILE MENU -->
   <div
     class="tisso-mobile-menu"
     data-tisso-mobile-panel
@@ -40,8 +38,6 @@
 
   </div>
 
-
-  <!-- DESKTOP TOP BAR -->
   <div class="tisso-banner__top">
 
     <div class="tisso-banner__brand">
@@ -62,8 +58,6 @@
 
   </div>
 
-
-  <!-- BANNER -->
   <div class="tisso-banner__content">
 
     {% if section.settings.banner_image != blank %}
@@ -85,7 +79,6 @@
       >
 
     {% endif %}
-
 
     <div class="tisso-banner__inner">
 
@@ -109,75 +102,53 @@
 
   </div>
 
-
-  <!-- BOTTOM ANNOUNCEMENT -->
   <div class="tisso-banner__announcement">
     {{ section.settings.bottom_message }}
   </div>
 
 </section>
 
-
-<!-- MOBILE MENU SCRIPT -->
-
 <script>
-
 (function() {
+  function initTissoMobileMenu() {
+    var section = document.getElementById('tisso-banner-{{ section.id }}');
 
-  const menuButton =
-    document.querySelector('[data-tisso-mobile-menu]');
+    if (!section) return;
 
-  const menuPanel =
-    document.querySelector('[data-tisso-mobile-panel]');
+    var button = section.querySelector('[data-tisso-mobile-menu]');
+    var panel = section.querySelector('[data-tisso-mobile-panel]');
 
-  if (!menuButton || !menuPanel) {
-    return;
+    if (!button || !panel) return;
+
+    if (button.dataset.tissoReady === 'true') return;
+
+    button.dataset.tissoReady = 'true';
+
+    button.addEventListener('click', function() {
+      var isOpen = button.getAttribute('aria-expanded') === 'true';
+
+      button.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+      button.setAttribute('aria-label', isOpen ? 'Open menu' : 'Close menu');
+
+      panel.hidden = isOpen;
+    });
   }
 
-  menuButton.addEventListener('click', function() {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTissoMobileMenu);
+  } else {
+    initTissoMobileMenu();
+  }
 
-    const isOpen =
-      menuButton.getAttribute('aria-expanded') === 'true';
-
-    if (isOpen) {
-
-      menuButton.setAttribute(
-        'aria-expanded',
-        'false'
-      );
-
-      menuButton.setAttribute(
-        'aria-label',
-        'Open menu'
-      );
-
-      menuPanel.hidden = true;
-
-    } else {
-
-      menuButton.setAttribute(
-        'aria-expanded',
-        'true'
-      );
-
-      menuButton.setAttribute(
-        'aria-label',
-        'Close menu'
-      );
-
-      menuPanel.hidden = false;
-
+  document.addEventListener('shopify:section:load', function(event) {
+    if (event.target && event.target.id === 'tisso-banner-{{ section.id }}') {
+      initTissoMobileMenu();
     }
-
   });
-
 })();
-
 </script>
 
-
 {% schema %}
-
 {
   "name": "Tisso Banner",
   "settings": [
@@ -245,18 +216,4 @@
     }
   ]
 }
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  const button = document.querySelector('.tisso-mobile-menu-button');
-  const menu = document.querySelector('.tisso-mobile-menu');
-
-  if (!button || !menu) return;
-
-  button.addEventListener('click', function () {
-    menu.hidden = !menu.hidden;
-  });
-});
-</script>
-
 {% endschema %}
