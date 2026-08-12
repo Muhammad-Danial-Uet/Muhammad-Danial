@@ -495,17 +495,18 @@ body.tisso-popup-open {
     background: #fff;
   }
 
-  /* Crop image and keep only its center */
-  .tisso-banner__background {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    max-width: none;
-    margin: 0;
-    object-fit: cover;
-    object-position: center center;
-  }
+  /* Crop image and shipfting it down */
+.tisso-banner__background {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  margin: 0;
+  object-fit: cover;
+  object-position: center center;
+  transform: translateY(30px);
+}
 
   /* Keep content above the banner */
   .tisso-banner__inner {
