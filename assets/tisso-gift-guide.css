@@ -254,8 +254,8 @@
 
 .tisso-hotspot {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: var(--hotspot-y);
+  left: var(--hotspot-x);
   width: 34px;
   height: 34px;
   padding: 0;
