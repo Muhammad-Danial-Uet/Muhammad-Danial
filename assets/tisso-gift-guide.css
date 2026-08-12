@@ -505,7 +505,7 @@ body.tisso-popup-open {
   margin: 0;
   object-fit: cover;
   object-position: center center;
-  transform: translateY(30px);
+  transform: translateY(50px);
 }
 
   /* Keep content above the banner */
