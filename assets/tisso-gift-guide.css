@@ -480,11 +480,6 @@ body.tisso-popup-open {
     padding: 12px 14px;
   }
 
-  
-  /* Mobile banner */
-  
-  @media screen and (max-width: 749px) {
-
 .tisso-banner__content {
   position: relative;
   top: 10px;
@@ -498,7 +493,7 @@ body.tisso-popup-open {
   /* Crop image and shipfting it down */
 .tisso-banner__background {
   position: absolute;
-  top: 100px;
+  top: 150px;
   left: 0;
   width: 100%;
   height: 100%;
