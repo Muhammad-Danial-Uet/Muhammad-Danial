@@ -649,16 +649,18 @@ body.tisso-popup-open {
   .tisso-mobile-brand {
     margin: 0;
     padding: 0;
-    font-size: 16px;
-    font-weight: 900;
+    position: relative;
+    top: 8px;
+    font-size: 20px;
+    font-weight: 1000;
     line-height: 1;
     text-align: center;
   }
 
   .tisso-mobile-menu-button {
     position: absolute;
-    left: 6px;
-    top: 50%;
+    left: 3px;
+    top: 58%;
     width: 20px;
     height: 20px;
     padding: 0;
