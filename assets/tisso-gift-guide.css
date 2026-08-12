@@ -619,10 +619,7 @@ body.tisso-popup-open {
   .tisso-add-button {
     height: 52px;
   }
-}
-
-/* Mobile */
-@media screen and (max-width: 749px) {
+  
   .tisso-popup__dialog {
     width: calc(100vw - 24px);
     max-width: calc(100vw - 24px);
@@ -651,7 +648,6 @@ body.tisso-popup-open {
   .tisso-popup__description {
     font-size: 13px;
   }
-}
 
 .tisso-color-options {
   display: grid;
@@ -690,10 +686,6 @@ body.tisso-popup-open {
 .tisso-color-option:hover {
   background: #f5f5f5;
 }
-
-/* Mobile */
-
-@media screen and (max-width: 749px) {
 
   /* Mobile top bar */
   .tisso-banner__top {
@@ -864,15 +856,12 @@ body.tisso-popup-open {
     height: 14px;
   }
 
-  @media screen and (max-width: 749px) {
   .tisso-products__header h2 {
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
     white-space: nowrap;
   }
-}
-}
 
 /* Tisso mobile hamburger header */
 
@@ -880,8 +869,6 @@ body.tisso-popup-open {
 .tisso-mobile-menu {
   display: none;
 }
-
-@media screen and (max-width: 749px) {
 
   .tisso-mobile-header {
     position: relative;
