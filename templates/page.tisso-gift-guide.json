@@ -71,8 +71,8 @@
           "type": "product",
           "settings": {
             "product": "dark-denim-top",
-            "hotspot_x": 60,
-            "hotspot_y": 15
+            "hotspot_x": 62,
+            "hotspot_y": 12
           }
         }
       },
