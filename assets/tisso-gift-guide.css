@@ -32,15 +32,17 @@
 }
 
 .tisso-banner__content {
-  @media screen and (max-width: 749px) {
+ @media screen and (max-width: 749px) {
   .tisso-banner__content {
-    min-height: 495px;
-    padding: 50px 24px;
-    justify-content: center;
-    text-align: center;
-    background-size: auto 100%;
+    aspect-ratio: 5 / 7;
+    min-height: 0;
+    height: auto;
+    padding: 0 24px;
+    background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
+  }
+}
   }
 
   .tisso-banner__inner {
