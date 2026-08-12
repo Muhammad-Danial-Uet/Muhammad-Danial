@@ -37,15 +37,14 @@
   </div>
 
   {% if section.settings.banner_image != blank %}
-    <img
-      class="tisso-banner__background"
-      src="{{ section.settings.banner_image | image_url: width: 2400 }}"
-      alt="{{ section.settings.banner_image.alt | escape }}"
-      loading="eager"
-      width="{{ section.settings.banner_image.width }}"
-      height="{{ section.settings.banner_image.height }}"
-    >
+    style="
+      background-image: url('{{ section.settings.banner_image | image_url: width: 2400 | escape }}');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+    "
   {% endif %}
+>
 
 </div>
 
