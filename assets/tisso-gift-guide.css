@@ -2,6 +2,7 @@
 
 .tisso-banner {
   position: relative;
+  width: 100%;
   overflow: visible;
   background: #f7f7f7;
 }
@@ -16,9 +17,11 @@
   background: #f7f7f7;
   position: relative;
   z-index: 10;
+  box-sizing: border-box;
 }
 
 .tisso-banner__brand {
+  flex: 0 0 auto;
   font-size: 22px;
   font-weight: 800;
   letter-spacing: -0.04em;
@@ -26,7 +29,7 @@
 }
 
 .tisso-banner__message {
-  flex: 1;
+  flex: 1 1 auto;
   text-align: center;
   font-size: 15px;
 }
@@ -34,11 +37,11 @@
 .tisso-banner__content {
   position: relative;
   width: 100%;
-  min-height: 0;
-  padding: 0;
   margin: 0;
+  padding: 0;
   overflow: hidden;
   background: #ffffff;
+  line-height: 0;
 }
 
 .tisso-banner__background {
@@ -47,15 +50,17 @@
   height: auto;
   max-width: 100%;
   margin: 0;
+  object-fit: contain;
 }
 
 .tisso-banner__inner {
   position: absolute;
-  top: 70%;
+  top: 65%;
   left: 8%;
   z-index: 2;
-  width: min(520px, calc(100% - 40px));
+  width: min(520px, 45%);
   transform: translateY(-50%);
+  line-height: normal;
 }
 
 .tisso-banner__title {
@@ -74,7 +79,9 @@
   color: #000000;
 }
 
-/* Buttons */
+.tisso-banner__description p {
+  margin: 0;
+}
 
 .tisso-button {
   position: relative;
@@ -85,16 +92,18 @@
   min-width: 190px;
   padding: 16px 22px;
   border: 1px solid transparent;
+  box-sizing: border-box;
   text-decoration: none;
   font-weight: 700;
+  line-height: 1;
   cursor: pointer;
   overflow: hidden;
   isolation: isolate;
-  box-sizing: border-box;
   transition:
     transform 180ms ease,
     box-shadow 180ms ease,
-    border-color 1.1s ease;
+    border-color 0.9s ease,
+    color 0.3s ease;
 }
 
 .tisso-button > span {
@@ -120,7 +129,7 @@
   background: #000000;
   transform: scaleX(0);
   transform-origin: left center;
-  transition: transform 1.1s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1;
 }
 
@@ -146,7 +155,7 @@
   background: #ffd600;
   transform: scaleX(0);
   transform-origin: left center;
-  transition: transform 1.1s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1;
 }
 
@@ -172,27 +181,26 @@
 .tisso-banner__announcement {
   position: relative;
   z-index: 5;
+  width: 100%;
   padding: 12px 20px;
+  box-sizing: border-box;
   text-align: center;
   background: #f7f7f7;
   color: #000000;
   font-size: 13px;
   font-weight: 700;
+  line-height: 1.4;
   letter-spacing: 0.05em;
 }
 
-/* Product Grid */
-
 .tisso-products {
   position: relative;
-  z-index: 1;
   display: block;
-  width: 100%;
   clear: both;
+  width: 100%;
   padding: 70px 5%;
-  margin: 0;
-  background: #ffffff;
   box-sizing: border-box;
+  background: #ffffff;
 }
 
 .tisso-products__header {
@@ -202,15 +210,16 @@
 .tisso-products__header h2 {
   margin: 0;
   font-size: clamp(32px, 4vw, 56px);
+  line-height: 1;
   letter-spacing: -0.05em;
   color: #000000;
 }
 
 .tisso-products__grid {
   display: grid;
-  width: 100%;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
+  width: 100%;
 }
 
 .tisso-product-card {
@@ -220,6 +229,7 @@
 
 .tisso-product-card__image-wrapper {
   position: relative;
+  width: 100%;
   overflow: hidden;
   background: #f5f5f5;
   aspect-ratio: 1 / 1;
@@ -236,8 +246,6 @@
 .tisso-product-card:hover .tisso-product-card__image {
   transform: scale(1.02);
 }
-
-/* Hotspot */
 
 .tisso-hotspot {
   position: absolute;
@@ -271,8 +279,6 @@
   font-size: 21px;
   line-height: 1;
 }
-
-/* Popup */
 
 .tisso-popup {
   position: fixed;
@@ -381,8 +387,6 @@
   color: #000000;
 }
 
-/* Add to Cart */
-
 .tisso-add-button {
   position: relative;
   width: 100%;
@@ -408,7 +412,7 @@
   background: #ffd600;
   transform: scaleX(0);
   transform-origin: left center;
-  transition: transform 1.1s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1;
 }
 
@@ -471,38 +475,37 @@ body.tisso-popup-open {
   }
 
   .tisso-banner__content {
-    position: relative;
-    display: block;
+    display: flex;
+    flex-direction: column;
     width: 100%;
     min-height: 0;
     height: auto;
-    padding: 0;
-    margin: 0;
     overflow: hidden;
     background: #ffffff;
     text-align: center;
+    line-height: normal;
   }
 
   .tisso-banner__background {
+    order: 2;
     display: block;
     width: 100%;
-    height: 430px;
-    max-width: none;
+    height: auto;
+    max-width: 100%;
     margin: 0;
-    object-fit: cover;
-    object-position: center center;
+    object-fit: contain;
   }
 
   .tisso-banner__inner {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 430px;
-    padding: 0;
-    margin: 0;
-    transform: none;
     z-index: 3;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    transform: none;
+    pointer-events: none;
   }
 
   .tisso-banner__title {
@@ -514,11 +517,12 @@ body.tisso-popup-open {
     font-size: 30px;
     line-height: 1.05;
     text-align: center;
+    pointer-events: auto;
   }
 
   .tisso-banner__description {
     position: absolute;
-    top: 76px;
+    top: 68px;
     left: 20px;
     right: 20px;
     max-width: 320px;
@@ -526,42 +530,40 @@ body.tisso-popup-open {
     font-size: 15px;
     line-height: 1.4;
     text-align: center;
+    pointer-events: auto;
   }
 
-  .tisso-banner__inner .tisso-button {
+  .tisso-banner__description p {
+    margin: 0;
+  }
+
+  .tisso-banner__shop-now {
     position: absolute;
     top: 58%;
     left: 50%;
     margin: 0;
     transform: translate(-50%, -50%);
+    pointer-events: auto;
   }
 
-  .tisso-banner__inner .tisso-button:hover {
+  .tisso-banner__shop-now:hover {
     transform: translate(-50%, calc(-50% - 3px));
-  }
-
-  .tisso-banner__announcement {
-    position: relative;
-    z-index: 5;
   }
 
   .tisso-products {
     display: block;
-    position: relative;
-    clear: both;
     width: 100%;
+    clear: both;
     padding: 45px 16px;
     margin: 0;
     background: #ffffff;
   }
 
   .tisso-products__header {
-    margin-bottom: 30px;
+    margin-bottom: 25px;
   }
 
   .tisso-products__grid {
-    display: grid;
-    width: 100%;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
   }
