@@ -638,8 +638,9 @@ body.tisso-popup-open {
 @media screen and (max-width: 749px) {
 
   .tisso-mobile-header {
-    position: relative;
+    position: absolute;
     z-index: 50;
+    top: 70%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -660,7 +661,7 @@ body.tisso-popup-open {
   .tisso-mobile-menu-button {
     position: absolute;
     left: 7px;
-    top: 50%;
+    top: 70%;
     width: 30px;
     height: 30px;
     padding: 0;
